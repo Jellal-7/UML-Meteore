@@ -1,0 +1,117 @@
+import { useState, useEffect } from 'react';
+import { useParams, Link } from 'react-router-dom';
+import { getBookingById } from '../services/booking.service';
+import { formatPrice, formatDateTime, formatDuration, getStatusLabel, getStatusColor } from '../utils/formatters';
+
+export default function ConfirmationPage() {
+  const { bookingId } = useParams();
+  const [booking, setBooking] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    getBookingById(bookingId)
+      .then((data) => setBooking(data.booking))
+      .catch(() => {})
+      .finally(() => setLoading(false));
+  }, [bookingId]);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center py-20">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+      </div>
+    );
+  }
+
+  if (!booking) {
+    return (
+      <div className="max-w-3xl mx-auto px-4 py-12 text-center">
+        <p className="text-red-600 text-lg">Réservation non trouvée</p>
+      </div>
+    );
+  }
+
+  const flight = booking.Flight;
+  const departure = flight?.departureAirport;
+  const arrival = flight?.arrivalAirport;
+  const airline = flight?.Airline;
+
+  return (
+    <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="text-center mb-8">
+        <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <svg className="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
+        <h1 className="font-display text-3xl font-bold text-gray-900">Réservation confirmée !</h1>
+        <p className="text-gray-600 mt-2">Votre réservation a été enregistrée avec succès.</p>
+      </div>
+
+      <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+        <div className="bg-primary-800 text-white p-4 flex justify-between items-center">
+          <span className="font-semibold">Réservation #{booking.id}</span>
+          <span className={`px-3 py-1 rounded-full text-xs font-semibold ${getStatusColor(booking.status)}`}>
+            {getStatusLabel(booking.status)}
+          </span>
+        </div>
+
+        <div className="p-6 space-y-6">
+          {/* Vol */}
+          <div>
+            <h2 className="font-semibold text-gray-900 mb-2">Détails du vol</h2>
+            <div className="bg-gray-50 rounded-lg p-4">
+              <div className="flex items-center gap-2 mb-2">
+                {airline?.logo_url && (
+                  <img src={airline.logo_url} alt={airline.name} className="w-6 h-6 object-contain" onError={(e) => { e.target.style.display = 'none'; }} />
+                )}
+                <span className="font-medium">{airline?.name} — {flight?.flight_number}</span>
+              </div>
+              <p className="font-semibold text-lg">
+                {departure?.city} ({departure?.iata_code}) → {arrival?.city} ({arrival?.iata_code})
+              </p>
+              <p className="text-sm text-gray-600">{formatDateTime(flight?.departure_at)}</p>
+              <p className="text-sm text-gray-600">Durée : {formatDuration(flight?.departure_at, flight?.arrival_at)}</p>
+            </div>
+          </div>
+
+          {/* Passagers */}
+          <div>
+            <h2 className="font-semibold text-gray-900 mb-2">Passagers</h2>
+            <div className="space-y-2">
+              {booking.Passengers?.map((p, i) => (
+                <div key={i} className="bg-gray-50 rounded-lg p-3 flex justify-between">
+                  <span>{p.first_name} {p.last_name}</span>
+                  <span className="text-sm text-gray-500">{p.passport_number}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Prix */}
+          <div className="border-t pt-4">
+            <div className="flex justify-between text-xl font-bold">
+              <span>Total payé</span>
+              <span className="text-primary-800">{formatPrice(booking.total_price)}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="flex gap-4 justify-center mt-8">
+        <Link
+          to="/my-bookings"
+          className="bg-primary-600 hover:bg-primary-700 text-white font-semibold py-2.5 px-6 rounded-lg transition-colors"
+        >
+          Mes réservations
+        </Link>
+        <Link
+          to="/"
+          className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2.5 px-6 rounded-lg transition-colors"
+        >
+          Retour à l'accueil
+        </Link>
+      </div>
+    </div>
+  );
+}
