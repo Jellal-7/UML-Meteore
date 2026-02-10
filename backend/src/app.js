@@ -7,7 +7,7 @@ const routes = require('./routes');
 
 const app = express();
 
-// Trust proxy (nécessaire derrière Render / reverse proxy)
+// Trust proxy — required behind Render / reverse proxy (nécessaire derrière Render / reverse proxy)
 app.set('trust proxy', 1);
 
 // Middlewares de sécurité
