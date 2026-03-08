@@ -2,15 +2,22 @@ import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { getBookingById } from '../services/booking.service';
 import { formatPrice, formatDateTime, formatDuration, getStatusLabel, getStatusColor } from '../utils/formatters';
+import { useAuth } from '../context/AuthContext';
 
 export default function ConfirmationPage() {
   const { bookingId } = useParams();
+  const { user } = useAuth();
   const [booking, setBooking] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [emailSent, setEmailSent] = useState(false);
 
   useEffect(() => {
     getBookingById(bookingId)
-      .then((data) => setBooking(data.booking))
+      .then((data) => {
+        setBooking(data.booking);
+        // Simulate email sending delay
+        setTimeout(() => setEmailSent(true), 1500);
+      })
       .catch(() => {})
       .finally(() => setLoading(false));
   }, [bookingId]);
@@ -94,6 +101,40 @@ export default function ConfirmationPage() {
               <span>Total payé</span>
               <span className="text-primary-800">{formatPrice(booking.total_price)}</span>
             </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Email confirmation simulation */}
+      <div className="mt-6 bg-green-50 border border-green-200 rounded-xl p-4">
+        <div className="flex items-start gap-3">
+          <div className="flex-shrink-0 mt-0.5">
+            {emailSent ? (
+              <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+            ) : (
+              <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-green-600"></div>
+            )}
+          </div>
+          <div>
+            <p className="font-semibold text-green-800">
+              {emailSent ? 'Email de confirmation envoyé !' : 'Envoi de l\'email de confirmation...'}
+            </p>
+            <p className="text-sm text-green-700 mt-1">
+              {emailSent
+                ? `Un récapitulatif de votre réservation a été envoyé à ${user?.email || 'votre adresse email'}.`
+                : 'Veuillez patienter...'}
+            </p>
+            {emailSent && (
+              <div className="mt-3 bg-white rounded-lg p-3 border border-green-100 text-sm text-gray-700">
+                <p className="font-medium text-gray-900 mb-1">Objet : Confirmation de réservation #{booking?.id} — Météore</p>
+                <p>Bonjour {user?.first_name || 'cher client'},</p>
+                <p className="mt-1">Votre réservation pour le vol {flight?.flight_number} ({departure?.city} → {arrival?.city}) le {formatDateTime(flight?.departure_at)} a bien été confirmée.</p>
+                <p className="mt-1">Montant total : {formatPrice(booking?.total_price)}</p>
+                <p className="mt-2 text-gray-500 italic">— L'équipe Météore</p>
+              </div>
+            )}
           </div>
         </div>
       </div>

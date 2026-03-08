@@ -31,9 +31,15 @@ export default function AdminDashboard() {
   const [stats, setStats] = useState({ totalBookings: 0, revenue: 0, cancelRate: 0, activeFlights: 0 });
   const [loading, setLoading] = useState(false);
 
+  const [bookingFilter, setBookingFilter] = useState('all');
+
   // Modal state
   const [modal, setModal] = useState({ open: false, type: '', entity: null });
   const [formData, setFormData] = useState({});
+
+  const filteredBookings = bookingFilter === 'all'
+    ? bookings
+    : bookings.filter((b) => b.status === bookingFilter);
 
   const fetchAll = async () => {
     setLoading(true);
@@ -314,6 +320,28 @@ export default function AdminDashboard() {
       {tab === 'bookings' && (
         <div>
           <h2 className="text-xl font-bold mb-4">Toutes les réservations</h2>
+
+          {/* Filtres réservations */}
+          <div className="flex flex-wrap gap-3 mb-4">
+            {['all', 'pending', 'confirmed', 'cancelled'].map((s) => {
+              const labels = { all: 'Toutes', pending: 'En attente', confirmed: 'Confirmées', cancelled: 'Annulées' };
+              const count = s === 'all' ? bookings.length : bookings.filter((b) => b.status === s).length;
+              return (
+                <button
+                  key={s}
+                  onClick={() => setBookingFilter(s)}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                    bookingFilter === s
+                      ? 'bg-primary-600 text-white'
+                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  }`}
+                >
+                  {labels[s]} ({count})
+                </button>
+              );
+            })}
+          </div>
+
           <div className="overflow-x-auto bg-white rounded-xl shadow">
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
@@ -328,7 +356,7 @@ export default function AdminDashboard() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
-                {bookings.map((b) => (
+                {filteredBookings.map((b) => (
                   <tr key={b.id} className="hover:bg-gray-50">
                     <td className="px-4 py-3 text-sm font-medium">{b.id}</td>
                     <td className="px-4 py-3 text-sm">{b.User?.first_name} {b.User?.last_name}</td>
@@ -345,6 +373,13 @@ export default function AdminDashboard() {
                     <td className="px-4 py-3 text-sm">{formatDateTime(b.created_at)}</td>
                   </tr>
                 ))}
+                {filteredBookings.length === 0 && (
+                  <tr>
+                    <td colSpan="7" className="px-4 py-8 text-center text-gray-500 text-sm">
+                      Aucune réservation trouvée pour ce filtre.
+                    </td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>

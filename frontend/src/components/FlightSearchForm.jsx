@@ -3,6 +3,7 @@ import { getAllAirports } from '../services/airport.service';
 
 export default function FlightSearchForm({ onSearch, initialValues = {} }) {
   const [airports, setAirports] = useState([]);
+  const [tripType, setTripType] = useState(initialValues.returnDate ? 'round' : 'oneway');
   const [form, setForm] = useState({
     from: initialValues.from || '',
     to: initialValues.to || '',
@@ -22,12 +23,24 @@ export default function FlightSearchForm({ onSearch, initialValues = {} }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSearch(form);
+    const data = { ...form };
+    if (tripType === 'oneway') delete data.returnDate;
+    onSearch(data);
   };
 
   return (
     <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-lg p-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+      <div className="flex gap-4 mb-4">
+        <label className="flex items-center gap-2 cursor-pointer">
+          <input type="radio" name="tripType" value="oneway" checked={tripType === 'oneway'} onChange={() => { setTripType('oneway'); setForm((p) => ({ ...p, returnDate: '' })); }} className="accent-primary-600" />
+          <span className="text-sm font-medium text-gray-700">Aller simple</span>
+        </label>
+        <label className="flex items-center gap-2 cursor-pointer">
+          <input type="radio" name="tripType" value="round" checked={tripType === 'round'} onChange={() => setTripType('round')} className="accent-primary-600" />
+          <span className="text-sm font-medium text-gray-700">Aller-retour</span>
+        </label>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Départ</label>
           <select
@@ -76,6 +89,21 @@ export default function FlightSearchForm({ onSearch, initialValues = {} }) {
             className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-gray-900 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
           />
         </div>
+
+        {tripType === 'round' && (
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Date de retour</label>
+            <input
+              type="date"
+              name="returnDate"
+              value={form.returnDate}
+              onChange={handleChange}
+              required
+              min={form.date || new Date().toISOString().split('T')[0]}
+              className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-gray-900 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+            />
+          </div>
+        )}
 
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Passagers</label>
