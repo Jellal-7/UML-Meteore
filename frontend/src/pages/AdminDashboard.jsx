@@ -32,14 +32,25 @@ export default function AdminDashboard() {
   const [loading, setLoading] = useState(false);
 
   const [bookingFilter, setBookingFilter] = useState('all');
+  const [bookingUserSearch, setBookingUserSearch] = useState('');
+  const [bookingDateFilter, setBookingDateFilter] = useState('');
 
   // Modal state
   const [modal, setModal] = useState({ open: false, type: '', entity: null });
   const [formData, setFormData] = useState({});
 
-  const filteredBookings = bookingFilter === 'all'
-    ? bookings
-    : bookings.filter((b) => b.status === bookingFilter);
+  const filteredBookings = bookings.filter((b) => {
+    if (bookingFilter !== 'all' && b.status !== bookingFilter) return false;
+    if (bookingUserSearch) {
+      const name = `${b.User?.first_name || ''} ${b.User?.last_name || ''}`.toLowerCase();
+      if (!name.includes(bookingUserSearch.toLowerCase())) return false;
+    }
+    if (bookingDateFilter) {
+      const created = b.created_at ? b.created_at.split('T')[0] : '';
+      if (created !== bookingDateFilter) return false;
+    }
+    return true;
+  });
 
   const fetchAll = async () => {
     setLoading(true);
@@ -340,6 +351,38 @@ export default function AdminDashboard() {
                 </button>
               );
             })}
+          </div>
+
+          <div className="flex flex-wrap gap-3 mb-4">
+            <div>
+              <label className="block text-xs font-medium text-gray-500 mb-1">Utilisateur</label>
+              <input
+                type="text"
+                placeholder="Rechercher par nom..."
+                value={bookingUserSearch}
+                onChange={(e) => setBookingUserSearch(e.target.value)}
+                className="border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 w-48"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-medium text-gray-500 mb-1">Date</label>
+              <input
+                type="date"
+                value={bookingDateFilter}
+                onChange={(e) => setBookingDateFilter(e.target.value)}
+                className="border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900"
+              />
+            </div>
+            {(bookingUserSearch || bookingDateFilter) && (
+              <div className="flex items-end">
+                <button
+                  onClick={() => { setBookingUserSearch(''); setBookingDateFilter(''); }}
+                  className="text-sm text-primary-600 hover:text-primary-700 font-medium py-2"
+                >
+                  Réinitialiser
+                </button>
+              </div>
+            )}
           </div>
 
           <div className="overflow-x-auto bg-white rounded-xl shadow">

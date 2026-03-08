@@ -1,4 +1,5 @@
 const { Op } = require('sequelize');
+const sequelize = require('../config/database');
 const { Flight, Airline, Airport, Booking } = require('../models');
 
 const searchFlights = async (req, res, next) => {
@@ -67,7 +68,7 @@ const searchFlights = async (req, res, next) => {
 
     let order = [['price', 'ASC']];
     if (sort === 'departure') order = [['departure_at', 'ASC']];
-    if (sort === 'duration') order = [['departure_at', 'ASC']];
+    if (sort === 'duration') order = [[sequelize.literal('arrival_at - departure_at'), 'ASC']];
     if (sort === 'price_desc') order = [['price', 'DESC']];
 
     const flights = await Flight.findAll({
