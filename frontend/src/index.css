@@ -6,14 +6,4 @@
   html {
     scroll-behavior: smooth;
   }
-
-  input,
-  select,
-  textarea {
-    color: #111827; /* gray-900 */
-  }
-
-  label {
-    color: #374151; /* gray-700 */
-  }
 }

@@ -35,7 +35,7 @@ export default function FlightSearchForm({ onSearch, initialValues = {} }) {
             value={form.from}
             onChange={handleChange}
             required
-            className="w-full border border-gray-300 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+            className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-gray-900 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
           >
             <option value="">Ville / Aéroport</option>
             {airports.map((a) => (
@@ -53,7 +53,7 @@ export default function FlightSearchForm({ onSearch, initialValues = {} }) {
             value={form.to}
             onChange={handleChange}
             required
-            className="w-full border border-gray-300 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+            className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-gray-900 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
           >
             <option value="">Ville / Aéroport</option>
             {airports.map((a) => (
@@ -73,7 +73,7 @@ export default function FlightSearchForm({ onSearch, initialValues = {} }) {
             onChange={handleChange}
             required
             min={new Date().toISOString().split('T')[0]}
-            className="w-full border border-gray-300 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+            className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-gray-900 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
           />
         </div>
 
@@ -87,7 +87,7 @@ export default function FlightSearchForm({ onSearch, initialValues = {} }) {
             min="1"
             max="9"
             required
-            className="w-full border border-gray-300 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+            className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-gray-900 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
           />
         </div>
 
