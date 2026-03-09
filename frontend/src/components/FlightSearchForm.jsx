@@ -13,7 +13,12 @@ export default function FlightSearchForm({ onSearch, initialValues = {} }) {
   });
 
   useEffect(() => {
-    getAllAirports().then((data) => setAirports(data.airports || [])).catch(() => {});
+    const fetchAirports = (retries = 3) => {
+      getAllAirports()
+        .then((data) => setAirports(data.airports || []))
+        .catch(() => { if (retries > 0) setTimeout(() => fetchAirports(retries - 1), 3000); });
+    };
+    fetchAirports();
   }, []);
 
   const handleChange = (e) => {
