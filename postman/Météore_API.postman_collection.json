@@ -22,6 +22,16 @@
           "name": "Register — Créer un compte",
           "event": [
             {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "const timestamp = Date.now();",
+                  "const randomEmail = `test.user.${timestamp}@example.com`;",
+                  "pm.collectionVariables.set('registerEmail', randomEmail);"
+                ]
+              }
+            },
+            {
               "listen": "test",
               "script": {
                 "exec": [
@@ -42,7 +52,7 @@
             "header": [{ "key": "Content-Type", "value": "application/json" }],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"first_name\": \"Test\",\n  \"last_name\": \"Utilisateur\",\n  \"email\": \"test.user@example.com\",\n  \"password\": \"motdepasse123\"\n}"
+              "raw": "{\n  \"first_name\": \"Test\",\n  \"last_name\": \"Utilisateur\",\n  \"email\": \"{{registerEmail}}\",\n  \"password\": \"motdepasse123\"\n}"
             },
             "url": { "raw": "{{baseUrl}}/auth/register", "host": ["{{baseUrl}}"], "path": ["auth", "register"] }
           }
