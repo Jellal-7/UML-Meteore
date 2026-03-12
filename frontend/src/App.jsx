@@ -15,6 +15,7 @@ import ProfilePage from './pages/ProfilePage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import AdminDashboard from './pages/AdminDashboard';
+import NotFoundPage from './pages/NotFoundPage';
 
 export default function App() {
   return (
@@ -50,6 +51,8 @@ export default function App() {
           <Route path="/admin" element={
             <ProtectedRoute requiredRole="admin"><AdminDashboard /></ProtectedRoute>
           } />
+
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Layout>
     </>

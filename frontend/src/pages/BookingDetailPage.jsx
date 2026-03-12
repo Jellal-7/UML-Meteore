@@ -62,7 +62,7 @@ export default function BookingDetailPage() {
         &larr; Mes réservations
       </Link>
 
-      <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden">
         <div className="bg-primary-800 text-white p-6 flex justify-between items-center">
           <div>
             <h1 className="font-display text-2xl font-bold">Réservation #{booking.id}</h1>
@@ -78,8 +78,8 @@ export default function BookingDetailPage() {
         <div className="p-6 space-y-6">
           {/* Vol */}
           <div>
-            <h2 className="font-semibold text-gray-900 mb-3">Vol</h2>
-            <div className="bg-gray-50 rounded-lg p-4">
+            <h2 className="font-semibold text-gray-900 dark:text-gray-100 mb-3">Vol</h2>
+            <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
               <div className="flex items-center gap-2 mb-3">
                 {airline?.logo_url && (
                   <img src={airline.logo_url} alt={airline.name} className="w-6 h-6 object-contain" onError={(e) => { e.target.style.display = 'none'; }} />
@@ -107,12 +107,12 @@ export default function BookingDetailPage() {
 
           {/* Passagers */}
           <div>
-            <h2 className="font-semibold text-gray-900 mb-3">
+            <h2 className="font-semibold text-gray-900 dark:text-gray-100 mb-3">
               Passagers ({booking.Passengers?.length})
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {booking.Passengers?.map((p, i) => (
-                <div key={i} className="bg-gray-50 rounded-lg p-3">
+                <div key={i} className="bg-gray-50 dark:bg-gray-700 rounded-lg p-3">
                   <p className="font-medium">{p.first_name} {p.last_name}</p>
                   <p className="text-sm text-gray-500">Né(e) le {formatDate(p.birth_date)}</p>
                   {p.passport_number && (
@@ -126,8 +126,8 @@ export default function BookingDetailPage() {
           {/* Paiement */}
           {payment && (
             <div>
-              <h2 className="font-semibold text-gray-900 mb-3">Paiement</h2>
-              <div className="bg-gray-50 rounded-lg p-4">
+              <h2 className="font-semibold text-gray-900 dark:text-gray-100 mb-3">Paiement</h2>
+              <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
                 <div className="flex justify-between">
                   <span>Statut</span>
                   <span className={`px-2 py-0.5 rounded-full text-xs font-semibold ${getStatusColor(payment.status)}`}>

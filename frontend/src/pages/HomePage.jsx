@@ -48,12 +48,12 @@ export default function HomePage() {
           {destinations.map((dest) => (
             <div
               key={dest.code}
-              className="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow p-6 border border-gray-100 cursor-pointer"
+              className="bg-white dark:bg-gray-800 rounded-xl shadow-md hover:shadow-lg transition-shadow p-6 border border-gray-100 cursor-pointer"
               onClick={() => handleSearch({ from: 'CDG', to: dest.code, passengers: 1, date: '' })}
             >
               <div className="flex justify-between items-start">
                 <div>
-                  <h3 className="font-display text-xl font-semibold text-gray-900">{dest.city}</h3>
+                  <h3 className="font-display text-xl font-semibold text-gray-900 dark:text-gray-100">{dest.city}</h3>
                   <p className="text-sm text-gray-500">{dest.country}</p>
                 </div>
                 <span className="text-sm font-mono bg-primary-50 text-primary-800 px-2 py-1 rounded">
@@ -81,7 +81,7 @@ export default function HomePage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
               </div>
-              <h3 className="font-semibold text-lg text-gray-900 mb-2">Recherche simple</h3>
+              <h3 className="font-semibold text-lg text-gray-900 dark:text-gray-100 mb-2">Recherche simple</h3>
               <p className="text-gray-600">Trouvez votre vol en quelques clics, sans publicité ni distraction.</p>
             </div>
             <div className="text-center">
@@ -90,7 +90,7 @@ export default function HomePage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
-              <h3 className="font-semibold text-lg text-gray-900 mb-2">Prix transparents</h3>
+              <h3 className="font-semibold text-lg text-gray-900 dark:text-gray-100 mb-2">Prix transparents</h3>
               <p className="text-gray-600">Le prix affiché est le prix payé. Aucun frais caché, aucune surprise.</p>
             </div>
             <div className="text-center">
@@ -99,7 +99,7 @@ export default function HomePage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
               </div>
-              <h3 className="font-semibold text-lg text-gray-900 mb-2">Réservation rapide</h3>
+              <h3 className="font-semibold text-lg text-gray-900 dark:text-gray-100 mb-2">Réservation rapide</h3>
               <p className="text-gray-600">Réservez et payez en un seul endroit, en moins de 3 minutes.</p>
             </div>
           </div>

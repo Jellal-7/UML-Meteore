@@ -108,7 +108,7 @@ export default function SearchPage() {
     const list = hook.flights;
     return (
       <div className="mb-8">
-        {label && <h2 className="text-xl font-bold text-gray-900 mb-3">{label}</h2>}
+        {label && <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-3">{label}</h2>}
         <p className="text-gray-600 mb-4">
           {list.length} vol{list.length !== 1 ? 's' : ''} trouvé{list.length !== 1 ? 's' : ''}
         </p>
@@ -135,7 +135,7 @@ export default function SearchPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <h1 className="font-display text-3xl font-bold text-gray-900 mb-6">Rechercher un vol</h1>
+      <h1 className="font-display text-3xl font-bold text-gray-900 dark:text-gray-100 mb-6">Rechercher un vol</h1>
 
       <div className="mb-8">
         <FlightSearchForm onSearch={handleSearch} initialValues={initialValues} />
@@ -154,7 +154,7 @@ export default function SearchPage() {
                 onChange={handleFilterChange}
                 placeholder="Illimité"
                 min="0"
-                className="border border-gray-300 rounded-lg px-3 py-2 w-32 text-sm text-gray-900"
+                className="border border-gray-300 rounded-lg px-3 py-2 w-32 text-sm text-gray-900 dark:text-gray-100"
               />
             </div>
             <div>
@@ -163,7 +163,7 @@ export default function SearchPage() {
                 name="airline_id"
                 value={filters.airline_id}
                 onChange={handleFilterChange}
-                className="border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900"
+                className="border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 dark:text-gray-100"
               >
                 <option value="">Toutes</option>
                 {airlines.map((a) => (
@@ -177,7 +177,7 @@ export default function SearchPage() {
                 name="sort"
                 value={filters.sort}
                 onChange={handleFilterChange}
-                className="border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900"
+                className="border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 dark:text-gray-100"
               >
                 <option value="price">Prix croissant</option>
                 <option value="price_desc">Prix décroissant</option>

@@ -11,7 +11,7 @@ export default function BookingCard({ booking, onCancel }) {
   const canCancel = booking.status !== 'cancelled' && isFuture;
 
   return (
-    <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
+    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div className="flex-1">
           <div className="flex items-center gap-2 mb-2">
@@ -25,7 +25,7 @@ export default function BookingCard({ booking, onCancel }) {
 
           {flight && (
             <div className="mb-2">
-              <p className="font-semibold text-gray-900">
+              <p className="font-semibold text-gray-900 dark:text-gray-100">
                 {departure?.city} ({departure?.iata_code}) → {arrival?.city} ({arrival?.iata_code})
               </p>
               <p className="text-sm text-gray-600">

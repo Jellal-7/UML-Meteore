@@ -48,7 +48,7 @@ export default function FlightDetailPage() {
         &larr; Retour aux résultats
       </Link>
 
-      <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden">
         {/* Header */}
         <div className="bg-primary-800 text-white p-6">
           <div className="flex items-center justify-between">
@@ -71,7 +71,7 @@ export default function FlightDetailPage() {
         <div className="p-6 border-b">
           <div className="flex items-center justify-between">
             <div className="text-center">
-              <p className="text-3xl font-bold text-gray-900">{departure?.iata_code}</p>
+              <p className="text-3xl font-bold text-gray-900 dark:text-gray-100">{departure?.iata_code}</p>
               <p className="text-lg text-gray-700">{departure?.city}</p>
               <p className="text-sm text-gray-500">{departure?.name}</p>
               <p className="text-sm font-medium text-primary-600 mt-2">
@@ -94,7 +94,7 @@ export default function FlightDetailPage() {
             </div>
 
             <div className="text-center">
-              <p className="text-3xl font-bold text-gray-900">{arrival?.iata_code}</p>
+              <p className="text-3xl font-bold text-gray-900 dark:text-gray-100">{arrival?.iata_code}</p>
               <p className="text-lg text-gray-700">{arrival?.city}</p>
               <p className="text-sm text-gray-500">{arrival?.name}</p>
               <p className="text-sm font-medium text-primary-600 mt-2">

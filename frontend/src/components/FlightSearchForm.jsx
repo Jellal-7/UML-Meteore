@@ -34,7 +34,7 @@ export default function FlightSearchForm({ onSearch, initialValues = {} }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-lg p-6">
+    <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
       <div className="flex gap-4 mb-4">
         <label className="flex items-center gap-2 cursor-pointer">
           <input type="radio" name="tripType" value="oneway" checked={tripType === 'oneway'} onChange={() => { setTripType('oneway'); setForm((p) => ({ ...p, returnDate: '' })); }} className="accent-primary-600" />

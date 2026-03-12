@@ -56,21 +56,21 @@ export default function PaymentPage() {
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <h1 className="font-display text-3xl font-bold text-gray-900 mb-6">Paiement</h1>
+      <h1 className="font-display text-3xl font-bold text-gray-900 dark:text-gray-100 mb-6">Paiement</h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Formulaire de paiement */}
         <div>
-          <div className="bg-white rounded-xl shadow-lg p-6">
-            <h2 className="font-display text-xl font-bold text-gray-900 mb-4">Informations de paiement</h2>
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+            <h2 className="font-display text-xl font-bold text-gray-900 dark:text-gray-100 mb-4">Informations de paiement</h2>
             <PaymentForm onPayment={handlePayment} loading={paying} />
           </div>
         </div>
 
         {/* Récapitulatif */}
         <div>
-          <div className="bg-white rounded-xl shadow-lg p-6">
-            <h2 className="font-display text-xl font-bold text-gray-900 mb-4">Récapitulatif de la commande</h2>
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+            <h2 className="font-display text-xl font-bold text-gray-900 dark:text-gray-100 mb-4">Récapitulatif de la commande</h2>
 
             <div className="space-y-4">
               <div className="flex items-center gap-2">
@@ -89,7 +89,7 @@ export default function PaymentPage() {
               </div>
 
               <div className="border-t pt-3">
-                <h3 className="font-medium text-gray-900 mb-2">Passagers ({booking.Passengers?.length})</h3>
+                <h3 className="font-medium text-gray-900 dark:text-gray-100 mb-2">Passagers ({booking.Passengers?.length})</h3>
                 {booking.Passengers?.map((p, i) => (
                   <p key={i} className="text-sm text-gray-600">
                     {p.first_name} {p.last_name}

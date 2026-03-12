@@ -169,7 +169,7 @@ export default function AdminDashboard() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <h1 className="font-display text-3xl font-bold text-gray-900 mb-6">Administration</h1>
+      <h1 className="font-display text-3xl font-bold text-gray-900 dark:text-gray-100 mb-6">Administration</h1>
 
       {/* Tabs */}
       <div className="flex gap-1 mb-8 flex-wrap bg-gray-100 rounded-lg p-1">
@@ -207,9 +207,9 @@ export default function AdminDashboard() {
               Ajouter un vol
             </button>
           </div>
-          <div className="overflow-x-auto bg-white rounded-xl shadow">
+          <div className="overflow-x-auto bg-white dark:bg-gray-800 rounded-xl shadow">
             <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
+              <thead className="bg-gray-50 dark:bg-gray-700">
                 <tr>
                   <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">N° Vol</th>
                   <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Compagnie</th>
@@ -256,9 +256,9 @@ export default function AdminDashboard() {
               Ajouter un aéroport
             </button>
           </div>
-          <div className="overflow-x-auto bg-white rounded-xl shadow">
+          <div className="overflow-x-auto bg-white dark:bg-gray-800 rounded-xl shadow">
             <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
+              <thead className="bg-gray-50 dark:bg-gray-700">
                 <tr>
                   <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Code IATA</th>
                   <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nom</th>
@@ -295,9 +295,9 @@ export default function AdminDashboard() {
               Ajouter une compagnie
             </button>
           </div>
-          <div className="overflow-x-auto bg-white rounded-xl shadow">
+          <div className="overflow-x-auto bg-white dark:bg-gray-800 rounded-xl shadow">
             <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
+              <thead className="bg-gray-50 dark:bg-gray-700">
                 <tr>
                   <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Logo</th>
                   <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nom</th>
@@ -370,7 +370,7 @@ export default function AdminDashboard() {
                 type="date"
                 value={bookingDateFilter}
                 onChange={(e) => setBookingDateFilter(e.target.value)}
-                className="border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900"
+                className="border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 dark:text-gray-100"
               />
             </div>
             {(bookingUserSearch || bookingDateFilter) && (
@@ -385,9 +385,9 @@ export default function AdminDashboard() {
             )}
           </div>
 
-          <div className="overflow-x-auto bg-white rounded-xl shadow">
+          <div className="overflow-x-auto bg-white dark:bg-gray-800 rounded-xl shadow">
             <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
+              <thead className="bg-gray-50 dark:bg-gray-700">
                 <tr>
                   <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">#</th>
                   <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Utilisateur</th>
@@ -432,8 +432,8 @@ export default function AdminDashboard() {
       {/* Modal */}
       {modal.open && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto p-6">
-            <h2 className="font-display text-xl font-bold text-gray-900 mb-4">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto p-6">
+            <h2 className="font-display text-xl font-bold text-gray-900 dark:text-gray-100 mb-4">
               {modal.entity ? 'Modifier' : 'Ajouter'}{' '}
               {modal.type === 'flight' ? 'un vol' : modal.type === 'airport' ? 'un aéroport' : 'une compagnie'}
             </h2>

@@ -80,7 +80,7 @@ export default function BookingPage() {
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <h1 className="font-display text-3xl font-bold text-gray-900 mb-6">Réservation</h1>
+      <h1 className="font-display text-3xl font-bold text-gray-900 dark:text-gray-100 mb-6">Réservation</h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Formulaire passagers */}
@@ -124,8 +124,8 @@ export default function BookingPage() {
 
         {/* Récapitulatif vol */}
         <div className="lg:col-span-1">
-          <div className="bg-white rounded-xl shadow-lg p-6 sticky top-24">
-            <h2 className="font-display text-xl font-bold text-gray-900 mb-4">Récapitulatif</h2>
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 sticky top-24">
+            <h2 className="font-display text-xl font-bold text-gray-900 dark:text-gray-100 mb-4">Récapitulatif</h2>
 
             <div className="space-y-3 mb-6">
               <div className="flex items-center gap-2">
@@ -136,7 +136,7 @@ export default function BookingPage() {
               </div>
 
               <div className="border-t pt-3">
-                <p className="font-semibold text-gray-900">
+                <p className="font-semibold text-gray-900 dark:text-gray-100">
                   {departure?.city} ({departure?.iata_code}) → {arrival?.city} ({arrival?.iata_code})
                 </p>
                 <p className="text-sm text-gray-600">{formatDateTime(flight.departure_at)}</p>

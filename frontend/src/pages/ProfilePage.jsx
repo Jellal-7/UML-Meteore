@@ -48,33 +48,33 @@ export default function ProfilePage() {
 
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <h1 className="font-display text-3xl font-bold text-gray-900 mb-6">Mon profil</h1>
+      <h1 className="font-display text-3xl font-bold text-gray-900 dark:text-gray-100 mb-6">Mon profil</h1>
 
-      <div className="bg-white rounded-xl shadow-lg p-6">
+      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
         {!editing ? (
           <div className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <p className="text-sm text-gray-500">Prénom</p>
-                <p className="font-medium text-gray-900">{user?.first_name}</p>
+                <p className="font-medium text-gray-900 dark:text-gray-100">{user?.first_name}</p>
               </div>
               <div>
                 <p className="text-sm text-gray-500">Nom</p>
-                <p className="font-medium text-gray-900">{user?.last_name}</p>
+                <p className="font-medium text-gray-900 dark:text-gray-100">{user?.last_name}</p>
               </div>
               <div>
                 <p className="text-sm text-gray-500">Email</p>
-                <p className="font-medium text-gray-900">{user?.email}</p>
+                <p className="font-medium text-gray-900 dark:text-gray-100">{user?.email}</p>
               </div>
               <div>
                 <p className="text-sm text-gray-500">Rôle</p>
-                <p className="font-medium text-gray-900">
+                <p className="font-medium text-gray-900 dark:text-gray-100">
                   {user?.role === 'admin' ? 'Administrateur' : 'Utilisateur'}
                 </p>
               </div>
               <div>
                 <p className="text-sm text-gray-500">Membre depuis</p>
-                <p className="font-medium text-gray-900">{formatDate(user?.created_at)}</p>
+                <p className="font-medium text-gray-900 dark:text-gray-100">{formatDate(user?.created_at)}</p>
               </div>
             </div>
             <button
@@ -123,7 +123,7 @@ export default function ProfilePage() {
             </div>
 
             <div className="border-t pt-4 mt-4">
-              <h3 className="font-medium text-gray-900 mb-3">Changer le mot de passe (optionnel)</h3>
+              <h3 className="font-medium text-gray-900 dark:text-gray-100 mb-3">Changer le mot de passe (optionnel)</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Mot de passe actuel</label>
