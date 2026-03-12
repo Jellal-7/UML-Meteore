@@ -69,9 +69,9 @@ export default function HomePage() {
       </section>
 
       {/* Pourquoi Météore */}
-      <section className="bg-gray-100 py-16">
+      <section className="bg-gray-100 dark:bg-gray-800 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="font-display text-3xl font-bold text-gray-900 text-center mb-10">
+          <h2 className="font-display text-3xl font-bold text-gray-900 dark:text-gray-100 text-center mb-10">
             Pourquoi choisir Météore ?
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -82,7 +82,7 @@ export default function HomePage() {
                 </svg>
               </div>
               <h3 className="font-semibold text-lg text-gray-900 dark:text-gray-100 mb-2">Recherche simple</h3>
-              <p className="text-gray-600">Trouvez votre vol en quelques clics, sans publicité ni distraction.</p>
+              <p className="text-gray-600 dark:text-gray-400">Trouvez votre vol en quelques clics, sans publicité ni distraction.</p>
             </div>
             <div className="text-center">
               <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -91,7 +91,7 @@ export default function HomePage() {
                 </svg>
               </div>
               <h3 className="font-semibold text-lg text-gray-900 dark:text-gray-100 mb-2">Prix transparents</h3>
-              <p className="text-gray-600">Le prix affiché est le prix payé. Aucun frais caché, aucune surprise.</p>
+              <p className="text-gray-600 dark:text-gray-400">Le prix affiché est le prix payé. Aucun frais caché, aucune surprise.</p>
             </div>
             <div className="text-center">
               <div className="w-16 h-16 bg-accent-400/20 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -100,7 +100,7 @@ export default function HomePage() {
                 </svg>
               </div>
               <h3 className="font-semibold text-lg text-gray-900 dark:text-gray-100 mb-2">Réservation rapide</h3>
-              <p className="text-gray-600">Réservez et payez en un seul endroit, en moins de 3 minutes.</p>
+              <p className="text-gray-600 dark:text-gray-400">Réservez et payez en un seul endroit, en moins de 3 minutes.</p>
             </div>
           </div>
         </div>
