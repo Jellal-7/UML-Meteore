@@ -607,7 +607,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"card_number\": \"4111111111111111\",\n  \"card_holder\": \"Jean Dupont\",\n  \"expiry\": \"1228\",\n  \"cvv\": \"123\"\n}"
+              "raw": "{\n  \"card_number\": \"4111111111111111\",\n  \"card_holder\": \"Jean Dupont\",\n  \"card_expiry\": \"1228\",\n  \"card_cvv\": \"123\"\n}"
             },
             "url": { "raw": "{{baseUrl}}/payments/{{bookingId}}/pay", "host": ["{{baseUrl}}"], "path": ["payments", "{{bookingId}}", "pay"] }
           }
@@ -795,7 +795,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"card_number\": \"4000000000000002\",\n  \"card_holder\": \"Card Test\",\n  \"expiry\": \"1228\",\n  \"cvv\": \"123\"\n}"
+              "raw": "{\n  \"card_number\": \"4000000000000002\",\n  \"card_holder\": \"Card Test\",\n  \"card_expiry\": \"1228\",\n  \"card_cvv\": \"123\"\n}"
             },
             "url": { "raw": "{{baseUrl}}/payments/{{blacklistBookingId}}/pay", "host": ["{{baseUrl}}"], "path": ["payments", "{{blacklistBookingId}}", "pay"] }
           }
