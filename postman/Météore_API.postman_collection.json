@@ -551,10 +551,11 @@
       ]
     },
     {
-      "name": "5. Réservations",
+      "name": "5. Réservations + Paiements",
+      "description": "Ordre critique : Créer → Payer → Consulter paiement → Créer 2e booking → Annuler 2e booking",
       "item": [
         {
-          "name": "Créer une réservation",
+          "name": "Créer une réservation (2 passagers)",
           "event": [
             {
               "listen": "test",
@@ -581,6 +582,55 @@
               "raw": "{\n  \"flight_id\": {{flightId}},\n  \"passengers\": [\n    {\n      \"first_name\": \"Jean\",\n      \"last_name\": \"Dupont\",\n      \"birth_date\": \"1990-05-15\",\n      \"passport_number\": \"FR12345678\"\n    },\n    {\n      \"first_name\": \"Marie\",\n      \"last_name\": \"Dupont\",\n      \"birth_date\": \"1992-08-20\",\n      \"passport_number\": \"FR87654321\"\n    }\n  ]\n}"
             },
             "url": { "raw": "{{baseUrl}}/bookings", "host": ["{{baseUrl}}"], "path": ["bookings"] }
+          }
+        },
+        {
+          "name": "Payer la réservation (simulation CB)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const res = pm.response.json();",
+                  "pm.test('Status 200 ou 201', () => pm.expect(pm.response.code).to.be.oneOf([200, 201]));",
+                  "pm.test('Paiement complété', () => pm.expect(res.payment.status).to.eql('completed'));",
+                  "pm.test('Booking confirmé', () => pm.expect(res.booking.status).to.eql('confirmed'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"card_number\": \"4111111111111111\",\n  \"card_holder\": \"Jean Dupont\",\n  \"expiry\": \"1228\",\n  \"cvv\": \"123\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/payments/{{bookingId}}/pay", "host": ["{{baseUrl}}"], "path": ["payments", "{{bookingId}}", "pay"] }
+          }
+        },
+        {
+          "name": "Consulter le paiement",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const res = pm.response.json();",
+                  "pm.test('Status 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Retourne le paiement', () => pm.expect(res.payment).to.have.property('amount'));",
+                  "pm.test('Statut completed', () => pm.expect(res.payment.status).to.eql('completed'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/payments/{{bookingId}}", "host": ["{{baseUrl}}"], "path": ["payments", "{{bookingId}}"] }
           }
         },
         {
@@ -636,7 +686,8 @@
                   "pm.test('Status 200', () => pm.response.to.have.status(200));",
                   "pm.test('Retourne bookings + pagination', () => {",
                   "  pm.expect(res.bookings).to.be.an('array');",
-                  "  pm.expect(res).to.have.property('total');",
+                  "  pm.expect(res.pagination).to.have.property('total');",
+                  "  pm.expect(res.pagination).to.have.property('totalPages');",
                   "});"
                 ]
               }
@@ -657,7 +708,34 @@
           }
         },
         {
-          "name": "Annuler une réservation",
+          "name": "Créer une 2e réservation (pour test annulation)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const res = pm.response.json();",
+                  "pm.test('Status 201', () => pm.response.to.have.status(201));",
+                  "pm.collectionVariables.set('cancelBookingId', res.booking.id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"flight_id\": {{flightId}},\n  \"passengers\": [\n    {\n      \"first_name\": \"Test\",\n      \"last_name\": \"Annulation\",\n      \"birth_date\": \"1995-01-01\",\n      \"passport_number\": \"FR00000001\"\n    }\n  ]\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/bookings", "host": ["{{baseUrl}}"], "path": ["bookings"] }
+          }
+        },
+        {
+          "name": "Annuler la 2e réservation",
           "event": [
             {
               "listen": "test",
@@ -673,25 +751,38 @@
           "request": {
             "method": "PATCH",
             "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
-            "url": { "raw": "{{baseUrl}}/bookings/{{bookingId}}/cancel", "host": ["{{baseUrl}}"], "path": ["bookings", "{{bookingId}}", "cancel"] }
+            "url": { "raw": "{{baseUrl}}/bookings/{{cancelBookingId}}/cancel", "host": ["{{baseUrl}}"], "path": ["bookings", "{{cancelBookingId}}", "cancel"] }
           }
-        }
-      ]
-    },
-    {
-      "name": "6. Paiements",
-      "item": [
+        },
         {
-          "name": "Payer une réservation (simulation CB)",
+          "name": "Paiement refusé — carte blacklistée (nouveau booking nécessaire)",
           "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "// Crée un booking frais pour tester la carte blacklistée",
+                  "const baseUrl = pm.collectionVariables.get('baseUrl');",
+                  "const token = pm.collectionVariables.get('token');",
+                  "const flightId = pm.collectionVariables.get('flightId');",
+                  "pm.sendRequest({",
+                  "  url: baseUrl + '/bookings',",
+                  "  method: 'POST',",
+                  "  header: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },",
+                  "  body: { mode: 'raw', raw: JSON.stringify({ flight_id: parseInt(flightId), passengers: [{ first_name: 'Card', last_name: 'Test', birth_date: '1990-01-01', passport_number: 'XX000' }] }) }",
+                  "}, (err, res) => {",
+                  "  const data = res.json();",
+                  "  pm.collectionVariables.set('blacklistBookingId', data.booking.id);",
+                  "});"
+                ]
+              }
+            },
             {
               "listen": "test",
               "script": {
                 "exec": [
-                  "const res = pm.response.json();",
-                  "pm.test('Status 200 ou 201', () => pm.expect(pm.response.code).to.be.oneOf([200, 201]));",
-                  "pm.test('Paiement complété', () => pm.expect(res.payment.status).to.eql('completed'));",
-                  "pm.test('Booking confirmé', () => pm.expect(res.booking.status).to.eql('confirmed'));"
+                  "pm.test('Status 402 — paiement refusé', () => pm.response.to.have.status(402));",
+                  "pm.test('Message de refus', () => pm.expect(pm.response.json().error).to.include('refusé'));"
                 ]
               }
             }
@@ -704,54 +795,9 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"card_number\": \"4111111111111111\",\n  \"card_holder\": \"Jean Dupont\",\n  \"expiry\": \"1228\",\n  \"cvv\": \"123\"\n}"
+              "raw": "{\n  \"card_number\": \"4000000000000002\",\n  \"card_holder\": \"Card Test\",\n  \"expiry\": \"1228\",\n  \"cvv\": \"123\"\n}"
             },
-            "url": { "raw": "{{baseUrl}}/payments/{{bookingId}}/pay", "host": ["{{baseUrl}}"], "path": ["payments", "{{bookingId}}", "pay"] }
-          }
-        },
-        {
-          "name": "Paiement refusé — carte blacklistée",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test('Status 402 — paiement refusé', () => pm.response.to.have.status(402));"
-                ]
-              }
-            }
-          ],
-          "request": {
-            "method": "POST",
-            "header": [
-              { "key": "Content-Type", "value": "application/json" },
-              { "key": "Authorization", "value": "Bearer {{token}}" }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"card_number\": \"4000000000000002\",\n  \"card_holder\": \"Jean Dupont\",\n  \"expiry\": \"1228\",\n  \"cvv\": \"123\"\n}"
-            },
-            "url": { "raw": "{{baseUrl}}/payments/{{bookingId}}/pay", "host": ["{{baseUrl}}"], "path": ["payments", "{{bookingId}}", "pay"] }
-          }
-        },
-        {
-          "name": "Consulter le paiement d'une réservation",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "const res = pm.response.json();",
-                  "pm.test('Status 200', () => pm.response.to.have.status(200));",
-                  "pm.test('Retourne le paiement', () => pm.expect(res.payment).to.have.property('amount'));"
-                ]
-              }
-            }
-          ],
-          "request": {
-            "method": "GET",
-            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
-            "url": { "raw": "{{baseUrl}}/payments/{{bookingId}}", "host": ["{{baseUrl}}"], "path": ["payments", "{{bookingId}}"] }
+            "url": { "raw": "{{baseUrl}}/payments/{{blacklistBookingId}}/pay", "host": ["{{baseUrl}}"], "path": ["payments", "{{blacklistBookingId}}", "pay"] }
           }
         }
       ]
