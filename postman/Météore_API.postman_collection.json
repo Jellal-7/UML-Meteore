@@ -851,6 +851,285 @@
           }
         }
       ]
+    },
+    {
+      "name": "8. Démo — Jeu de données admin",
+      "description": "Crée des vols de démonstration datés dans le futur via le compte admin.\nExécuter ce dossier APRÈS 'Login Admin' pour que {{adminToken}} soit défini.\nLes vols créés apparaissent immédiatement dans la recherche frontend.",
+      "item": [
+        {
+          "name": "Démo — Vol Paris CDG → New York JFK (Air France, 7j)",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "const dep = new Date(); dep.setDate(dep.getDate() + 7); dep.setHours(8,0,0,0);",
+                  "const arr = new Date(dep); arr.setHours(17,0,0,0);",
+                  "pm.collectionVariables.set('demoDep1', dep.toISOString());",
+                  "pm.collectionVariables.set('demoArr1', arr.toISOString());"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 201 — vol créé', () => pm.response.to.have.status(201));",
+                  "pm.test('Vol AF901 Paris → New York', () => {",
+                  "  const f = pm.response.json().flight;",
+                  "  pm.expect(f.flight_number).to.eql('AF901');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"flight_number\": \"AF901\",\n  \"airline_id\": 1,\n  \"departure_airport_id\": 1,\n  \"arrival_airport_id\": 3,\n  \"departure_at\": \"{{demoDep1}}\",\n  \"arrival_at\": \"{{demoArr1}}\",\n  \"price\": 459.00,\n  \"available_seats\": 120,\n  \"total_seats\": 180,\n  \"status\": \"scheduled\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/flights", "host": ["{{baseUrl}}"], "path": ["flights"] }
+          }
+        },
+        {
+          "name": "Démo — Vol Paris CDG → Londres LHR (British Airways, 3j)",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "const dep = new Date(); dep.setDate(dep.getDate() + 3); dep.setHours(10,30,0,0);",
+                  "const arr = new Date(dep); arr.setHours(11,45,0,0);",
+                  "pm.collectionVariables.set('demoDep2', dep.toISOString());",
+                  "pm.collectionVariables.set('demoArr2', arr.toISOString());"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 201 — vol créé', () => pm.response.to.have.status(201));",
+                  "pm.test('Vol BA701 Paris → Londres', () => {",
+                  "  const f = pm.response.json().flight;",
+                  "  pm.expect(f.flight_number).to.eql('BA701');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"flight_number\": \"BA701\",\n  \"airline_id\": 2,\n  \"departure_airport_id\": 1,\n  \"arrival_airport_id\": 4,\n  \"departure_at\": \"{{demoDep2}}\",\n  \"arrival_at\": \"{{demoArr2}}\",\n  \"price\": 135.00,\n  \"available_seats\": 85,\n  \"total_seats\": 150,\n  \"status\": \"scheduled\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/flights", "host": ["{{baseUrl}}"], "path": ["flights"] }
+          }
+        },
+        {
+          "name": "Démo — Vol Paris CDG → Dubaï DXB (Emirates, 10j)",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "const dep = new Date(); dep.setDate(dep.getDate() + 10); dep.setHours(14,0,0,0);",
+                  "const arr = new Date(dep); arr.setHours(21,0,0,0);",
+                  "pm.collectionVariables.set('demoDep3', dep.toISOString());",
+                  "pm.collectionVariables.set('demoArr3', arr.toISOString());"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 201 — vol créé', () => pm.response.to.have.status(201));",
+                  "pm.test('Vol EK801 Paris → Dubaï', () => {",
+                  "  const f = pm.response.json().flight;",
+                  "  pm.expect(f.flight_number).to.eql('EK801');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"flight_number\": \"EK801\",\n  \"airline_id\": 3,\n  \"departure_airport_id\": 1,\n  \"arrival_airport_id\": 5,\n  \"departure_at\": \"{{demoDep3}}\",\n  \"arrival_at\": \"{{demoArr3}}\",\n  \"price\": 395.00,\n  \"available_seats\": 200,\n  \"total_seats\": 300,\n  \"status\": \"scheduled\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/flights", "host": ["{{baseUrl}}"], "path": ["flights"] }
+          }
+        },
+        {
+          "name": "Démo — Vol Paris CDG → Barcelone BCN (Air France, 5j, low cost)",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "const dep = new Date(); dep.setDate(dep.getDate() + 5); dep.setHours(7,15,0,0);",
+                  "const arr = new Date(dep); arr.setHours(9,15,0,0);",
+                  "pm.collectionVariables.set('demoDep4', dep.toISOString());",
+                  "pm.collectionVariables.set('demoArr4', arr.toISOString());"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 201 — vol créé', () => pm.response.to.have.status(201));",
+                  "pm.test('Vol AF505 Paris → Barcelone', () => {",
+                  "  const f = pm.response.json().flight;",
+                  "  pm.expect(f.flight_number).to.eql('AF505');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"flight_number\": \"AF505\",\n  \"airline_id\": 1,\n  \"departure_airport_id\": 1,\n  \"arrival_airport_id\": 7,\n  \"departure_at\": \"{{demoDep4}}\",\n  \"arrival_at\": \"{{demoArr4}}\",\n  \"price\": 79.00,\n  \"available_seats\": 50,\n  \"total_seats\": 90,\n  \"status\": \"scheduled\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/flights", "host": ["{{baseUrl}}"], "path": ["flights"] }
+          }
+        },
+        {
+          "name": "Démo — Vol Tokyo NRT → Dubaï DXB (Emirates, 14j)",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "const dep = new Date(); dep.setDate(dep.getDate() + 14); dep.setHours(22,0,0,0);",
+                  "const arr = new Date(dep.getTime() + 11*60*60*1000);",
+                  "pm.collectionVariables.set('demoDep5', dep.toISOString());",
+                  "pm.collectionVariables.set('demoArr5', arr.toISOString());"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 201 — vol créé', () => pm.response.to.have.status(201));",
+                  "pm.test('Vol EK319 Tokyo → Dubaï', () => {",
+                  "  const f = pm.response.json().flight;",
+                  "  pm.expect(f.flight_number).to.eql('EK319');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"flight_number\": \"EK319\",\n  \"airline_id\": 3,\n  \"departure_airport_id\": 6,\n  \"arrival_airport_id\": 5,\n  \"departure_at\": \"{{demoDep5}}\",\n  \"arrival_at\": \"{{demoArr5}}\",\n  \"price\": 720.00,\n  \"available_seats\": 180,\n  \"total_seats\": 350,\n  \"status\": \"scheduled\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/flights", "host": ["{{baseUrl}}"], "path": ["flights"] }
+          }
+        },
+        {
+          "name": "Démo — Recherche CDG → tous (vérifier que les vols créés apparaissent)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const res = pm.response.json();",
+                  "pm.test('Status 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Résultats de recherche non vides', () => pm.expect(res.flights.length).to.be.greaterThan(0));",
+                  "pm.test('Vols triés par prix croissant', () => {",
+                  "  for (let i = 1; i < res.flights.length; i++) {",
+                  "    pm.expect(parseFloat(res.flights[i].price)).to.be.at.least(parseFloat(res.flights[i-1].price));",
+                  "  }",
+                  "});",
+                  "const numbers = res.flights.map(f => f.flight_number);",
+                  "pm.test('Contient le vol low cost AF505', () => pm.expect(numbers).to.include('AF505'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/flights/search?from=CDG&passengers=1&sort=price",
+              "host": ["{{baseUrl}}"],
+              "path": ["flights", "search"],
+              "query": [
+                { "key": "from", "value": "CDG" },
+                { "key": "passengers", "value": "1" },
+                { "key": "sort", "value": "price" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Démo — Recherche filtrée prix max 150€",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const res = pm.response.json();",
+                  "pm.test('Status 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Résultats présents', () => pm.expect(res.flights.length).to.be.greaterThan(0));",
+                  "pm.test('Tous les vols ≤ 150€', () => {",
+                  "  res.flights.forEach(f => pm.expect(parseFloat(f.price)).to.be.at.most(150));",
+                  "});",
+                  "pm.test('Contient AF505 à 79€', () => {",
+                  "  pm.expect(res.flights.some(f => f.flight_number === 'AF505')).to.be.true;",
+                  "});",
+                  "pm.test('Contient BA701 à 135€', () => {",
+                  "  pm.expect(res.flights.some(f => f.flight_number === 'BA701')).to.be.true;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/flights/search?from=CDG&price_max=150&passengers=1&sort=price",
+              "host": ["{{baseUrl}}"],
+              "path": ["flights", "search"],
+              "query": [
+                { "key": "from", "value": "CDG" },
+                { "key": "price_max", "value": "150" },
+                { "key": "passengers", "value": "1" },
+                { "key": "sort", "value": "price" }
+              ]
+            }
+          }
+        }
+      ]
     }
   ]
 }
