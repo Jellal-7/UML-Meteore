@@ -3,6 +3,8 @@ const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
+const swaggerUi = require('swagger-ui-express');
+const swaggerSpec = require('./config/swagger');
 const routes = require('./routes');
 
 const app = express();
@@ -33,6 +35,12 @@ const authLimiter = rateLimit({
   message: { error: 'Trop de tentatives, veuillez réessayer dans 15 minutes' },
 });
 app.use('/api/auth/login', authLimiter);
+
+// Documentation Swagger
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
+  customSiteTitle: 'Météore API — Documentation',
+  customCss: '.swagger-ui .topbar { display: none }',
+}));
 
 // Routes API
 app.use('/api', routes);
