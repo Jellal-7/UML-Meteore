@@ -1,0 +1,800 @@
+{
+  "info": {
+    "name": "Météore API",
+    "description": "Collection complète de l'API REST Météore — plateforme de réservation de vols.\n\nVariables :\n- {{baseUrl}} : URL de l'API (local ou production)\n- {{token}} : JWT récupéré automatiquement après login\n- {{adminToken}} : JWT admin récupéré automatiquement après login admin",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "https://uml-meteore.onrender.com/api" },
+    { "key": "token", "value": "" },
+    { "key": "adminToken", "value": "" },
+    { "key": "userId", "value": "" },
+    { "key": "flightId", "value": "" },
+    { "key": "bookingId", "value": "" },
+    { "key": "airportId", "value": "" },
+    { "key": "airlineId", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "1. Authentification",
+      "item": [
+        {
+          "name": "Register — Créer un compte",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const res = pm.response.json();",
+                  "pm.test('Status 201', () => pm.response.to.have.status(201));",
+                  "pm.test('Retourne un token JWT', () => pm.expect(res.token).to.be.a('string'));",
+                  "pm.test('Retourne les infos utilisateur', () => {",
+                  "  pm.expect(res.user).to.have.property('email');",
+                  "  pm.expect(res.user).to.have.property('first_name');",
+                  "});",
+                  "if (res.token) pm.collectionVariables.set('token', res.token);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"first_name\": \"Test\",\n  \"last_name\": \"Utilisateur\",\n  \"email\": \"test.user@example.com\",\n  \"password\": \"motdepasse123\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/auth/register", "host": ["{{baseUrl}}"], "path": ["auth", "register"] }
+          }
+        },
+        {
+          "name": "Login — Connexion utilisateur",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const res = pm.response.json();",
+                  "pm.test('Status 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Retourne un token JWT', () => pm.expect(res.token).to.be.a('string'));",
+                  "pm.test('Retourne le rôle user', () => pm.expect(res.user.role).to.eql('user'));",
+                  "if (res.token) pm.collectionVariables.set('token', res.token);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"jean.dupont@email.com\",\n  \"password\": \"user123\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/auth/login", "host": ["{{baseUrl}}"], "path": ["auth", "login"] }
+          }
+        },
+        {
+          "name": "Login Admin — Connexion administrateur",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const res = pm.response.json();",
+                  "pm.test('Status 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Retourne un token JWT', () => pm.expect(res.token).to.be.a('string'));",
+                  "pm.test('Retourne le rôle admin', () => pm.expect(res.user.role).to.eql('admin'));",
+                  "if (res.token) pm.collectionVariables.set('adminToken', res.token);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@meteore.fr\",\n  \"password\": \"admin123\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/auth/login", "host": ["{{baseUrl}}"], "path": ["auth", "login"] }
+          }
+        },
+        {
+          "name": "Login — Identifiants incorrects (test erreur)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 401', () => pm.response.to.have.status(401));",
+                  "pm.test('Message générique (ne révèle pas si email ou mot de passe)', () => {",
+                  "  const res = pm.response.json();",
+                  "  pm.expect(res.error).to.include('incorrect');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@meteore.fr\",\n  \"password\": \"mauvais_mot_de_passe\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/auth/login", "host": ["{{baseUrl}}"], "path": ["auth", "login"] }
+          }
+        },
+        {
+          "name": "GET /auth/me — Profil utilisateur connecté",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const res = pm.response.json();",
+                  "pm.test('Status 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Retourne le profil sans password_hash', () => {",
+                  "  pm.expect(res.user).to.have.property('email');",
+                  "  pm.expect(res.user).to.not.have.property('password_hash');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/auth/me", "host": ["{{baseUrl}}"], "path": ["auth", "me"] }
+          }
+        },
+        {
+          "name": "GET /auth/me — Sans token (test 401)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 401', () => pm.response.to.have.status(401));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/auth/me", "host": ["{{baseUrl}}"], "path": ["auth", "me"] }
+          }
+        },
+        {
+          "name": "PUT /auth/profile — Modifier le profil",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Profil mis à jour', () => {",
+                  "  const res = pm.response.json();",
+                  "  pm.expect(res.user.first_name).to.eql('Jean-Updated');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"first_name\": \"Jean-Updated\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/auth/profile", "host": ["{{baseUrl}}"], "path": ["auth", "profile"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Vols",
+      "item": [
+        {
+          "name": "Rechercher des vols — sans filtres",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const res = pm.response.json();",
+                  "pm.test('Status 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Retourne un tableau de vols', () => pm.expect(res.flights).to.be.an('array'));",
+                  "pm.test('Au moins 1 vol retourné', () => pm.expect(res.flights.length).to.be.greaterThan(0));",
+                  "if (res.flights.length > 0) pm.collectionVariables.set('flightId', res.flights[0].id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/flights/search", "host": ["{{baseUrl}}"], "path": ["flights", "search"] }
+          }
+        },
+        {
+          "name": "Rechercher des vols — CDG → JFK",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const res = pm.response.json();",
+                  "pm.test('Status 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Retourne des vols', () => pm.expect(res.flights).to.be.an('array'));",
+                  "if (res.flights.length > 0) {",
+                  "  pm.test('Vol au départ de CDG', () => pm.expect(res.flights[0].departureAirport.iata_code).to.eql('CDG'));",
+                  "  pm.collectionVariables.set('flightId', res.flights[0].id);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/flights/search?from=CDG&to=JFK&passengers=1&sort=price",
+              "host": ["{{baseUrl}}"],
+              "path": ["flights", "search"],
+              "query": [
+                { "key": "from", "value": "CDG" },
+                { "key": "to", "value": "JFK" },
+                { "key": "passengers", "value": "1" },
+                { "key": "sort", "value": "price" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Rechercher des vols — filtre prix max 200€",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const res = pm.response.json();",
+                  "pm.test('Status 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Tous les vols sont ≤ 200€', () => {",
+                  "  res.flights.forEach(f => pm.expect(parseFloat(f.price)).to.be.at.most(200));",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/flights/search?price_max=200&sort=price",
+              "host": ["{{baseUrl}}"],
+              "path": ["flights", "search"],
+              "query": [
+                { "key": "price_max", "value": "200" },
+                { "key": "sort", "value": "price" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Détail d'un vol",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const res = pm.response.json();",
+                  "pm.test('Status 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Retourne le vol avec ses relations', () => {",
+                  "  pm.expect(res.flight).to.have.property('flight_number');",
+                  "  pm.expect(res.flight).to.have.property('Airline');",
+                  "  pm.expect(res.flight).to.have.property('departureAirport');",
+                  "  pm.expect(res.flight).to.have.property('arrivalAirport');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/flights/{{flightId}}", "host": ["{{baseUrl}}"], "path": ["flights", "{{flightId}}"] }
+          }
+        },
+        {
+          "name": "Admin — Créer un vol",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const res = pm.response.json();",
+                  "pm.test('Status 201', () => pm.response.to.have.status(201));",
+                  "pm.test('Vol créé avec le bon numéro', () => pm.expect(res.flight.flight_number).to.eql('TEST01'));",
+                  "pm.collectionVariables.set('testFlightId', res.flight.id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"flight_number\": \"TEST01\",\n  \"airline_id\": 1,\n  \"departure_airport_id\": 1,\n  \"arrival_airport_id\": 3,\n  \"departure_at\": \"2026-06-15T08:00:00.000Z\",\n  \"arrival_at\": \"2026-06-15T17:00:00.000Z\",\n  \"price\": 999.99,\n  \"available_seats\": 50,\n  \"total_seats\": 100,\n  \"status\": \"scheduled\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/flights", "host": ["{{baseUrl}}"], "path": ["flights"] }
+          }
+        },
+        {
+          "name": "Admin — Modifier un vol",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Prix mis à jour', () => pm.expect(parseFloat(pm.response.json().flight.price)).to.eql(1099.99));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"price\": 1099.99\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/flights/{{testFlightId}}", "host": ["{{baseUrl}}"], "path": ["flights", "{{testFlightId}}"] }
+          }
+        },
+        {
+          "name": "Admin — Supprimer un vol (sans réservations)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 204', () => pm.response.to.have.status(204));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{adminToken}}" }],
+            "url": { "raw": "{{baseUrl}}/flights/{{testFlightId}}", "host": ["{{baseUrl}}"], "path": ["flights", "{{testFlightId}}"] }
+          }
+        },
+        {
+          "name": "User — Créer un vol (test 403 Forbidden)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 403 — rôle insuffisant', () => pm.response.to.have.status(403));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"flight_number\": \"HACK01\",\n  \"airline_id\": 1,\n  \"departure_airport_id\": 1,\n  \"arrival_airport_id\": 2,\n  \"departure_at\": \"2026-06-01T08:00:00.000Z\",\n  \"arrival_at\": \"2026-06-01T10:00:00.000Z\",\n  \"price\": 1,\n  \"available_seats\": 1,\n  \"total_seats\": 1\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/flights", "host": ["{{baseUrl}}"], "path": ["flights"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Aéroports",
+      "item": [
+        {
+          "name": "Lister tous les aéroports",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const res = pm.response.json();",
+                  "pm.test('Status 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Retourne 8 aéroports', () => pm.expect(res.airports.length).to.eql(8));",
+                  "pm.test('Chaque aéroport a un code IATA', () => {",
+                  "  res.airports.forEach(a => pm.expect(a.iata_code).to.have.lengthOf(3));",
+                  "});",
+                  "if (res.airports.length > 0) pm.collectionVariables.set('airportId', res.airports[0].id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/airports", "host": ["{{baseUrl}}"], "path": ["airports"] }
+          }
+        },
+        {
+          "name": "Admin — Créer un aéroport",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const res = pm.response.json();",
+                  "pm.test('Status 201', () => pm.response.to.have.status(201));",
+                  "pm.test('Code IATA correct', () => pm.expect(res.airport.iata_code).to.eql('TST'));",
+                  "pm.collectionVariables.set('testAirportId', res.airport.id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Test Airport\",\n  \"iata_code\": \"TST\",\n  \"city\": \"Testville\",\n  \"country\": \"France\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/airports", "host": ["{{baseUrl}}"], "path": ["airports"] }
+          }
+        },
+        {
+          "name": "Admin — Supprimer un aéroport",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 204', () => pm.response.to.have.status(204));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{adminToken}}" }],
+            "url": { "raw": "{{baseUrl}}/airports/{{testAirportId}}", "host": ["{{baseUrl}}"], "path": ["airports", "{{testAirportId}}"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. Compagnies aériennes",
+      "item": [
+        {
+          "name": "Lister toutes les compagnies",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const res = pm.response.json();",
+                  "pm.test('Status 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Retourne 4 compagnies', () => pm.expect(res.airlines.length).to.eql(4));",
+                  "if (res.airlines.length > 0) pm.collectionVariables.set('airlineId', res.airlines[0].id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/airlines", "host": ["{{baseUrl}}"], "path": ["airlines"] }
+          }
+        },
+        {
+          "name": "Admin — Créer une compagnie",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const res = pm.response.json();",
+                  "pm.test('Status 201', () => pm.response.to.have.status(201));",
+                  "pm.collectionVariables.set('testAirlineId', res.airline.id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Test Airlines\",\n  \"logo_url\": \"https://example.com/logo.png\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/airlines", "host": ["{{baseUrl}}"], "path": ["airlines"] }
+          }
+        },
+        {
+          "name": "Admin — Supprimer une compagnie",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 204', () => pm.response.to.have.status(204));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{adminToken}}" }],
+            "url": { "raw": "{{baseUrl}}/airlines/{{testAirlineId}}", "host": ["{{baseUrl}}"], "path": ["airlines", "{{testAirlineId}}"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "5. Réservations",
+      "item": [
+        {
+          "name": "Créer une réservation",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const res = pm.response.json();",
+                  "pm.test('Status 201', () => pm.response.to.have.status(201));",
+                  "pm.test('Statut initial = pending', () => pm.expect(res.booking.status).to.eql('pending'));",
+                  "pm.test('Passagers créés', () => pm.expect(res.booking.Passengers.length).to.eql(2));",
+                  "pm.test('Prix total calculé', () => pm.expect(parseFloat(res.booking.total_price)).to.be.greaterThan(0));",
+                  "pm.collectionVariables.set('bookingId', res.booking.id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"flight_id\": {{flightId}},\n  \"passengers\": [\n    {\n      \"first_name\": \"Jean\",\n      \"last_name\": \"Dupont\",\n      \"birth_date\": \"1990-05-15\",\n      \"passport_number\": \"FR12345678\"\n    },\n    {\n      \"first_name\": \"Marie\",\n      \"last_name\": \"Dupont\",\n      \"birth_date\": \"1992-08-20\",\n      \"passport_number\": \"FR87654321\"\n    }\n  ]\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/bookings", "host": ["{{baseUrl}}"], "path": ["bookings"] }
+          }
+        },
+        {
+          "name": "Mes réservations",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const res = pm.response.json();",
+                  "pm.test('Status 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Retourne un tableau', () => pm.expect(res.bookings).to.be.an('array'));",
+                  "pm.test('Au moins 1 réservation', () => pm.expect(res.bookings.length).to.be.greaterThan(0));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/bookings/my", "host": ["{{baseUrl}}"], "path": ["bookings", "my"] }
+          }
+        },
+        {
+          "name": "Détail d'une réservation",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const res = pm.response.json();",
+                  "pm.test('Status 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Contient les passagers', () => pm.expect(res.booking.Passengers).to.be.an('array'));",
+                  "pm.test('Contient le vol', () => pm.expect(res.booking.Flight).to.have.property('flight_number'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/bookings/{{bookingId}}", "host": ["{{baseUrl}}"], "path": ["bookings", "{{bookingId}}"] }
+          }
+        },
+        {
+          "name": "Admin — Toutes les réservations (paginé)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const res = pm.response.json();",
+                  "pm.test('Status 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Retourne bookings + pagination', () => {",
+                  "  pm.expect(res.bookings).to.be.an('array');",
+                  "  pm.expect(res).to.have.property('total');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{adminToken}}" }],
+            "url": {
+              "raw": "{{baseUrl}}/bookings/admin/all?page=1&limit=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["bookings", "admin", "all"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "10" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Annuler une réservation",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const res = pm.response.json();",
+                  "pm.test('Status 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Statut passe à cancelled', () => pm.expect(res.booking.status).to.eql('cancelled'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/bookings/{{bookingId}}/cancel", "host": ["{{baseUrl}}"], "path": ["bookings", "{{bookingId}}", "cancel"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "6. Paiements",
+      "item": [
+        {
+          "name": "Payer une réservation (simulation CB)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const res = pm.response.json();",
+                  "pm.test('Status 200 ou 201', () => pm.expect(pm.response.code).to.be.oneOf([200, 201]));",
+                  "pm.test('Paiement complété', () => pm.expect(res.payment.status).to.eql('completed'));",
+                  "pm.test('Booking confirmé', () => pm.expect(res.booking.status).to.eql('confirmed'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"card_number\": \"4111111111111111\",\n  \"card_holder\": \"Jean Dupont\",\n  \"expiry\": \"1228\",\n  \"cvv\": \"123\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/payments/{{bookingId}}/pay", "host": ["{{baseUrl}}"], "path": ["payments", "{{bookingId}}", "pay"] }
+          }
+        },
+        {
+          "name": "Paiement refusé — carte blacklistée",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 402 — paiement refusé', () => pm.response.to.have.status(402));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"card_number\": \"4000000000000002\",\n  \"card_holder\": \"Jean Dupont\",\n  \"expiry\": \"1228\",\n  \"cvv\": \"123\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/payments/{{bookingId}}/pay", "host": ["{{baseUrl}}"], "path": ["payments", "{{bookingId}}", "pay"] }
+          }
+        },
+        {
+          "name": "Consulter le paiement d'une réservation",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const res = pm.response.json();",
+                  "pm.test('Status 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Retourne le paiement', () => pm.expect(res.payment).to.have.property('amount'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/payments/{{bookingId}}", "host": ["{{baseUrl}}"], "path": ["payments", "{{bookingId}}"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "7. Santé",
+      "item": [
+        {
+          "name": "Health check",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Status OK', () => pm.expect(pm.response.json().status).to.eql('OK'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": { "raw": "https://uml-meteore.onrender.com/health", "host": ["https://uml-meteore.onrender.com"], "path": ["health"] }
+          }
+        },
+        {
+          "name": "Route inexistante (test 404)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 404', () => pm.response.to.have.status(404));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/route-inexistante", "host": ["{{baseUrl}}"], "path": ["route-inexistante"] }
+          }
+        }
+      ]
+    }
+  ]
+}
