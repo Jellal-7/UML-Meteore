@@ -21,7 +21,7 @@ export default function FlightCard({ flight }) {
           )}
           <div>
             <p className="text-sm font-medium text-gray-900 dark:text-gray-100">{airline?.name}</p>
-            <p className="text-xs text-gray-500">{flight.flight_number}</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400">{flight.flight_number}</p>
           </div>
         </div>
 
@@ -29,7 +29,7 @@ export default function FlightCard({ flight }) {
         <div className="flex items-center gap-4 md:w-2/5">
           <div className="text-center">
             <p className="text-xl font-bold text-gray-900 dark:text-gray-100">{formatTime(flight.departure_at)}</p>
-            <p className="text-sm text-gray-600">{departure?.iata_code}</p>
+            <p className="text-sm text-gray-600 dark:text-gray-400">{departure?.iata_code}</p>
             <p className="text-xs text-gray-400">{departure?.city}</p>
           </div>
 
@@ -44,12 +44,12 @@ export default function FlightCard({ flight }) {
               </svg>
               <div className="h-px bg-gray-300 flex-1"></div>
             </div>
-            <p className="text-xs text-gray-500 mt-1">Direct</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Direct</p>
           </div>
 
           <div className="text-center">
             <p className="text-xl font-bold text-gray-900 dark:text-gray-100">{formatTime(flight.arrival_at)}</p>
-            <p className="text-sm text-gray-600">{arrival?.iata_code}</p>
+            <p className="text-sm text-gray-600 dark:text-gray-400">{arrival?.iata_code}</p>
             <p className="text-xs text-gray-400">{arrival?.city}</p>
           </div>
         </div>

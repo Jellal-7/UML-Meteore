@@ -202,26 +202,26 @@ export default function AdminDashboard() {
       {tab === 'flights' && (
         <div>
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-bold">Gestion des vols</h2>
+            <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">Gestion des vols</h2>
             <button onClick={() => openModal('flight')} className="bg-primary-600 hover:bg-primary-700 text-white text-sm font-semibold py-2 px-4 rounded-lg transition-colors">
               Ajouter un vol
             </button>
           </div>
           <div className="overflow-x-auto bg-white dark:bg-gray-800 rounded-xl shadow">
-            <table className="min-w-full divide-y divide-gray-200">
+            <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
               <thead className="bg-gray-50 dark:bg-gray-700">
                 <tr>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">N° Vol</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Compagnie</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Route</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Départ</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Prix</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Places</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Statut</th>
-                  <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase">Actions</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">N° Vol</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Compagnie</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Route</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Départ</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Prix</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Places</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Statut</th>
+                  <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-200">
+              <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
                 {flights.map((f) => (
                   <tr key={f.id} className="hover:bg-gray-50">
                     <td className="px-4 py-3 text-sm font-medium">{f.flight_number}</td>
@@ -251,23 +251,23 @@ export default function AdminDashboard() {
       {tab === 'airports' && (
         <div>
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-bold">Gestion des aéroports</h2>
+            <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">Gestion des aéroports</h2>
             <button onClick={() => openModal('airport')} className="bg-primary-600 hover:bg-primary-700 text-white text-sm font-semibold py-2 px-4 rounded-lg transition-colors">
               Ajouter un aéroport
             </button>
           </div>
           <div className="overflow-x-auto bg-white dark:bg-gray-800 rounded-xl shadow">
-            <table className="min-w-full divide-y divide-gray-200">
+            <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
               <thead className="bg-gray-50 dark:bg-gray-700">
                 <tr>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Code IATA</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nom</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Ville</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Pays</th>
-                  <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase">Actions</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Code IATA</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Nom</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Ville</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Pays</th>
+                  <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-200">
+              <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
                 {airports.map((a) => (
                   <tr key={a.id} className="hover:bg-gray-50">
                     <td className="px-4 py-3 text-sm font-mono font-bold">{a.iata_code}</td>
@@ -290,21 +290,21 @@ export default function AdminDashboard() {
       {tab === 'airlines' && (
         <div>
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-bold">Gestion des compagnies</h2>
+            <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">Gestion des compagnies</h2>
             <button onClick={() => openModal('airline')} className="bg-primary-600 hover:bg-primary-700 text-white text-sm font-semibold py-2 px-4 rounded-lg transition-colors">
               Ajouter une compagnie
             </button>
           </div>
           <div className="overflow-x-auto bg-white dark:bg-gray-800 rounded-xl shadow">
-            <table className="min-w-full divide-y divide-gray-200">
+            <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
               <thead className="bg-gray-50 dark:bg-gray-700">
                 <tr>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Logo</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nom</th>
-                  <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase">Actions</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Logo</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Nom</th>
+                  <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-200">
+              <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
                 {airlines.map((a) => (
                   <tr key={a.id} className="hover:bg-gray-50">
                     <td className="px-4 py-3">
@@ -330,7 +330,7 @@ export default function AdminDashboard() {
       {/* Bookings */}
       {tab === 'bookings' && (
         <div>
-          <h2 className="text-xl font-bold mb-4">Toutes les réservations</h2>
+          <h2 className="text-xl font-bold mb-4 text-gray-900 dark:text-gray-100">Toutes les réservations</h2>
 
           {/* Filtres réservations */}
           <div className="flex flex-wrap gap-3 mb-4">
@@ -386,19 +386,19 @@ export default function AdminDashboard() {
           </div>
 
           <div className="overflow-x-auto bg-white dark:bg-gray-800 rounded-xl shadow">
-            <table className="min-w-full divide-y divide-gray-200">
+            <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
               <thead className="bg-gray-50 dark:bg-gray-700">
                 <tr>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">#</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Utilisateur</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Vol</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Passagers</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Total</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Statut</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">#</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Utilisateur</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Vol</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Passagers</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Total</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Statut</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Date</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-200">
+              <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
                 {filteredBookings.map((b) => (
                   <tr key={b.id} className="hover:bg-gray-50">
                     <td className="px-4 py-3 text-sm font-medium">{b.id}</td>

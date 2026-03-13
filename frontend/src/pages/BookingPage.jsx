@@ -87,7 +87,7 @@ export default function BookingPage() {
         <div className="lg:col-span-2">
           <form onSubmit={handleSubmit}>
             <div className="mb-6">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Nombre de passagers
               </label>
               <select
@@ -139,18 +139,18 @@ export default function BookingPage() {
                 <p className="font-semibold text-gray-900 dark:text-gray-100">
                   {departure?.city} ({departure?.iata_code}) → {arrival?.city} ({arrival?.iata_code})
                 </p>
-                <p className="text-sm text-gray-600">{formatDateTime(flight.departure_at)}</p>
-                <p className="text-sm text-gray-600">Durée : {formatDuration(flight.departure_at, flight.arrival_at)}</p>
+                <p className="text-sm text-gray-600 dark:text-gray-400">{formatDateTime(flight.departure_at)}</p>
+                <p className="text-sm text-gray-600 dark:text-gray-400">Durée : {formatDuration(flight.departure_at, flight.arrival_at)}</p>
               </div>
             </div>
 
             <div className="border-t pt-4 space-y-2">
               <div className="flex justify-between text-sm">
-                <span className="text-gray-600">Prix / personne</span>
+                <span className="text-gray-600 dark:text-gray-400">Prix / personne</span>
                 <span>{formatPrice(flight.price)}</span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-gray-600">Passagers</span>
+                <span className="text-gray-600 dark:text-gray-400">Passagers</span>
                 <span>{passengerCount}</span>
               </div>
               <div className="flex justify-between font-bold text-lg border-t pt-2">

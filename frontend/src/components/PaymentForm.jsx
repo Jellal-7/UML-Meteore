@@ -39,7 +39,7 @@ export default function PaymentForm({ onPayment, loading }) {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">Titulaire de la carte</label>
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Titulaire de la carte</label>
         <input
           type="text"
           name="card_holder"
@@ -52,7 +52,7 @@ export default function PaymentForm({ onPayment, loading }) {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">Numéro de carte</label>
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Numéro de carte</label>
         <input
           type="text"
           name="card_number"
@@ -66,7 +66,7 @@ export default function PaymentForm({ onPayment, loading }) {
 
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Expiration</label>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Expiration</label>
           <input
             type="text"
             name="card_expiry"
@@ -78,7 +78,7 @@ export default function PaymentForm({ onPayment, loading }) {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">CVV</label>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">CVV</label>
           <input
             type="text"
             name="card_cvv"
@@ -99,7 +99,7 @@ export default function PaymentForm({ onPayment, loading }) {
         {loading ? 'Traitement en cours...' : 'Payer maintenant'}
       </button>
 
-      <p className="text-xs text-gray-500 text-center">
+      <p className="text-xs text-gray-500 dark:text-gray-400 text-center">
         Paiement simulé — aucune transaction réelle ne sera effectuée.
       </p>
     </form>

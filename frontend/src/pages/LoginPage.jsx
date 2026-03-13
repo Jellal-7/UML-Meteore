@@ -35,13 +35,13 @@ export default function LoginPage() {
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <h1 className="font-display text-3xl font-bold text-gray-900 dark:text-gray-100">Connexion</h1>
-          <p className="text-gray-600 mt-2">Accédez à votre espace Météore</p>
+          <p className="text-gray-600 dark:text-gray-400 mt-2">Accédez à votre espace Météore</p>
         </div>
 
         <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8">
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Adresse email</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Adresse email</label>
               <input
                 type="email"
                 name="email"
@@ -54,7 +54,7 @@ export default function LoginPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Mot de passe</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Mot de passe</label>
               <input
                 type="password"
                 name="password"
@@ -75,7 +75,7 @@ export default function LoginPage() {
             </button>
           </form>
 
-          <p className="text-center text-sm text-gray-600 mt-6">
+          <p className="text-center text-sm text-gray-600 dark:text-gray-400 mt-6">
             Pas encore de compte ?{' '}
             <Link to="/register" className="text-primary-600 hover:underline font-medium">
               Créer un compte

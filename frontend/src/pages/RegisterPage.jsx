@@ -50,14 +50,14 @@ export default function RegisterPage() {
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <h1 className="font-display text-3xl font-bold text-gray-900 dark:text-gray-100">Inscription</h1>
-          <p className="text-gray-600 mt-2">Créez votre compte Météore</p>
+          <p className="text-gray-600 dark:text-gray-400 mt-2">Créez votre compte Météore</p>
         </div>
 
         <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8">
           <form onSubmit={handleSubmit} className="space-y-5">
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Prénom</label>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Prénom</label>
                 <input
                   type="text"
                   name="first_name"
@@ -68,7 +68,7 @@ export default function RegisterPage() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Nom</label>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Nom</label>
                 <input
                   type="text"
                   name="last_name"
@@ -81,7 +81,7 @@ export default function RegisterPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Adresse email</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Adresse email</label>
               <input
                 type="email"
                 name="email"
@@ -94,7 +94,7 @@ export default function RegisterPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Mot de passe</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Mot de passe</label>
               <input
                 type="password"
                 name="password"
@@ -105,11 +105,11 @@ export default function RegisterPage() {
                 autoComplete="new-password"
                 className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
               />
-              <p className="text-xs text-gray-500 mt-1">Minimum 6 caractères</p>
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Minimum 6 caractères</p>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Confirmer le mot de passe</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Confirmer le mot de passe</label>
               <input
                 type="password"
                 name="confirm_password"
@@ -131,7 +131,7 @@ export default function RegisterPage() {
             </button>
           </form>
 
-          <p className="text-center text-sm text-gray-600 mt-6">
+          <p className="text-center text-sm text-gray-600 dark:text-gray-400 mt-6">
             Déjà un compte ?{' '}
             <Link to="/login" className="text-primary-600 hover:underline font-medium">
               Se connecter

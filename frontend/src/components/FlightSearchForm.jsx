@@ -38,16 +38,16 @@ export default function FlightSearchForm({ onSearch, initialValues = {} }) {
       <div className="flex gap-4 mb-4">
         <label className="flex items-center gap-2 cursor-pointer">
           <input type="radio" name="tripType" value="oneway" checked={tripType === 'oneway'} onChange={() => { setTripType('oneway'); setForm((p) => ({ ...p, returnDate: '' })); }} className="accent-primary-600" />
-          <span className="text-sm font-medium text-gray-700">Aller simple</span>
+          <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Aller simple</span>
         </label>
         <label className="flex items-center gap-2 cursor-pointer">
           <input type="radio" name="tripType" value="round" checked={tripType === 'round'} onChange={() => setTripType('round')} className="accent-primary-600" />
-          <span className="text-sm font-medium text-gray-700">Aller-retour</span>
+          <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Aller-retour</span>
         </label>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Départ</label>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Départ</label>
           <select
             name="from"
             value={form.from}
@@ -65,7 +65,7 @@ export default function FlightSearchForm({ onSearch, initialValues = {} }) {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Arrivée</label>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Arrivée</label>
           <select
             name="to"
             value={form.to}
@@ -83,7 +83,7 @@ export default function FlightSearchForm({ onSearch, initialValues = {} }) {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Date de départ</label>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Date de départ</label>
           <input
             type="date"
             name="date"
@@ -97,7 +97,7 @@ export default function FlightSearchForm({ onSearch, initialValues = {} }) {
 
         {tripType === 'round' && (
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Date de retour</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Date de retour</label>
             <input
               type="date"
               name="returnDate"
@@ -111,7 +111,7 @@ export default function FlightSearchForm({ onSearch, initialValues = {} }) {
         )}
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Passagers</label>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Passagers</label>
           <input
             type="number"
             name="passengers"

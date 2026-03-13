@@ -6,7 +6,7 @@ export default function PassengerForm({ index, passenger, onChange }) {
 
   return (
     <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 border border-gray-200">
-      <h4 className="font-semibold text-gray-700 mb-3">Passager {index + 1}</h4>
+      <h4 className="font-semibold text-gray-700 dark:text-gray-300 mb-3">Passager {index + 1}</h4>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-medium text-gray-600 mb-1">Prénom</label>

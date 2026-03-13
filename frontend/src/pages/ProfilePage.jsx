@@ -55,25 +55,25 @@ export default function ProfilePage() {
           <div className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <p className="text-sm text-gray-500">Prénom</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">Prénom</p>
                 <p className="font-medium text-gray-900 dark:text-gray-100">{user?.first_name}</p>
               </div>
               <div>
-                <p className="text-sm text-gray-500">Nom</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">Nom</p>
                 <p className="font-medium text-gray-900 dark:text-gray-100">{user?.last_name}</p>
               </div>
               <div>
-                <p className="text-sm text-gray-500">Email</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">Email</p>
                 <p className="font-medium text-gray-900 dark:text-gray-100">{user?.email}</p>
               </div>
               <div>
-                <p className="text-sm text-gray-500">Rôle</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">Rôle</p>
                 <p className="font-medium text-gray-900 dark:text-gray-100">
                   {user?.role === 'admin' ? 'Administrateur' : 'Utilisateur'}
                 </p>
               </div>
               <div>
-                <p className="text-sm text-gray-500">Membre depuis</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">Membre depuis</p>
                 <p className="font-medium text-gray-900 dark:text-gray-100">{formatDate(user?.created_at)}</p>
               </div>
             </div>
@@ -88,7 +88,7 @@ export default function ProfilePage() {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Prénom</label>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Prénom</label>
                 <input
                   type="text"
                   name="first_name"
@@ -99,7 +99,7 @@ export default function ProfilePage() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Nom</label>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Nom</label>
                 <input
                   type="text"
                   name="last_name"
@@ -110,7 +110,7 @@ export default function ProfilePage() {
                 />
               </div>
               <div className="md:col-span-2">
-                <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email</label>
                 <input
                   type="email"
                   name="email"
@@ -126,7 +126,7 @@ export default function ProfilePage() {
               <h3 className="font-medium text-gray-900 dark:text-gray-100 mb-3">Changer le mot de passe (optionnel)</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Mot de passe actuel</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Mot de passe actuel</label>
                   <input
                     type="password"
                     name="current_password"
@@ -136,7 +136,7 @@ export default function ProfilePage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Nouveau mot de passe</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Nouveau mot de passe</label>
                   <input
                     type="password"
                     name="password"

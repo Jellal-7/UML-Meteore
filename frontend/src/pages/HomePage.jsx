@@ -54,7 +54,7 @@ export default function HomePage() {
               <div className="flex justify-between items-start">
                 <div>
                   <h3 className="font-display text-xl font-semibold text-gray-900 dark:text-gray-100">{dest.city}</h3>
-                  <p className="text-sm text-gray-500">{dest.country}</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">{dest.country}</p>
                 </div>
                 <span className="text-sm font-mono bg-primary-50 text-primary-800 px-2 py-1 rounded">
                   {dest.code}

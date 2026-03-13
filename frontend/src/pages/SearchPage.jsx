@@ -118,7 +118,7 @@ export default function SearchPage() {
             <svg className="w-12 h-12 text-gray-300 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            <p className="text-gray-500">Aucun vol ne correspond à votre recherche.</p>
+            <p className="text-gray-500 dark:text-gray-400">Aucun vol ne correspond à votre recherche.</p>
           </div>
         ) : (
           <div className="space-y-4">
@@ -210,7 +210,7 @@ export default function SearchPage() {
           <svg className="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
-          <p className="text-gray-500 text-lg">Lancez une recherche pour trouver votre vol.</p>
+          <p className="text-gray-500 dark:text-gray-400 text-lg">Lancez une recherche pour trouver votre vol.</p>
         </div>
       )}
     </div>

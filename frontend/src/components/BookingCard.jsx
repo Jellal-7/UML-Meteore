@@ -18,7 +18,7 @@ export default function BookingCard({ booking, onCancel }) {
             <span className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold ${getStatusColor(booking.status)}`}>
               {getStatusLabel(booking.status)}
             </span>
-            <span className="text-sm text-gray-500">
+            <span className="text-sm text-gray-500 dark:text-gray-400">
               Réservation #{booking.id}
             </span>
           </div>
@@ -28,13 +28,13 @@ export default function BookingCard({ booking, onCancel }) {
               <p className="font-semibold text-gray-900 dark:text-gray-100">
                 {departure?.city} ({departure?.iata_code}) → {arrival?.city} ({arrival?.iata_code})
               </p>
-              <p className="text-sm text-gray-600">
+              <p className="text-sm text-gray-600 dark:text-gray-400">
                 {airline?.name} — {flight.flight_number} | {formatDateTime(flight.departure_at)} | Durée : {formatDuration(flight.departure_at, flight.arrival_at)}
               </p>
             </div>
           )}
 
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-gray-600 dark:text-gray-400">
             {passengerCount} passager{passengerCount > 1 ? 's' : ''}
           </p>
         </div>

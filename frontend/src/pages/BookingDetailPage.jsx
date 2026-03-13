@@ -88,18 +88,18 @@ export default function BookingDetailPage() {
               </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
-                  <p className="text-sm text-gray-500">Départ</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">Départ</p>
                   <p className="font-semibold">{departure?.city} ({departure?.iata_code})</p>
-                  <p className="text-sm text-gray-600">{formatDateTime(flight?.departure_at)}</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">{formatDateTime(flight?.departure_at)}</p>
                 </div>
                 <div className="text-center">
-                  <p className="text-sm text-gray-500">Durée</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">Durée</p>
                   <p className="font-semibold">{formatDuration(flight?.departure_at, flight?.arrival_at)}</p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-500">Arrivée</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">Arrivée</p>
                   <p className="font-semibold">{arrival?.city} ({arrival?.iata_code})</p>
-                  <p className="text-sm text-gray-600">{formatDateTime(flight?.arrival_at)}</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">{formatDateTime(flight?.arrival_at)}</p>
                 </div>
               </div>
             </div>
@@ -114,9 +114,9 @@ export default function BookingDetailPage() {
               {booking.Passengers?.map((p, i) => (
                 <div key={i} className="bg-gray-50 dark:bg-gray-700 rounded-lg p-3">
                   <p className="font-medium">{p.first_name} {p.last_name}</p>
-                  <p className="text-sm text-gray-500">Né(e) le {formatDate(p.birth_date)}</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">Né(e) le {formatDate(p.birth_date)}</p>
                   {p.passport_number && (
-                    <p className="text-sm text-gray-500">Passeport : {p.passport_number}</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">Passeport : {p.passport_number}</p>
                   )}
                 </div>
               ))}
@@ -139,7 +139,7 @@ export default function BookingDetailPage() {
                   <span className="font-bold">{formatPrice(payment.amount)}</span>
                 </div>
                 {payment.processed_at && (
-                  <div className="flex justify-between mt-2 text-sm text-gray-500">
+                  <div className="flex justify-between mt-2 text-sm text-gray-500 dark:text-gray-400">
                     <span>Date</span>
                     <span>{formatDateTime(payment.processed_at)}</span>
                   </div>
@@ -150,7 +150,7 @@ export default function BookingDetailPage() {
 
           {/* Total */}
           <div className="border-t pt-4 flex justify-between items-center">
-            <span className="text-xl font-bold">Total</span>
+            <span className="text-xl font-bold text-gray-900 dark:text-gray-100">Total</span>
             <span className="text-2xl font-bold text-primary-800">{formatPrice(booking.total_price)}</span>
           </div>
 

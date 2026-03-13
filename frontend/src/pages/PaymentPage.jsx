@@ -84,14 +84,14 @@ export default function PaymentPage() {
                 <p className="font-semibold">
                   {departure?.city} ({departure?.iata_code}) → {arrival?.city} ({arrival?.iata_code})
                 </p>
-                <p className="text-sm text-gray-600">{formatDateTime(flight?.departure_at)}</p>
-                <p className="text-sm text-gray-600">Durée : {formatDuration(flight?.departure_at, flight?.arrival_at)}</p>
+                <p className="text-sm text-gray-600 dark:text-gray-400">{formatDateTime(flight?.departure_at)}</p>
+                <p className="text-sm text-gray-600 dark:text-gray-400">Durée : {formatDuration(flight?.departure_at, flight?.arrival_at)}</p>
               </div>
 
               <div className="border-t pt-3">
                 <h3 className="font-medium text-gray-900 dark:text-gray-100 mb-2">Passagers ({booking.Passengers?.length})</h3>
                 {booking.Passengers?.map((p, i) => (
-                  <p key={i} className="text-sm text-gray-600">
+                  <p key={i} className="text-sm text-gray-600 dark:text-gray-400">
                     {p.first_name} {p.last_name}
                   </p>
                 ))}

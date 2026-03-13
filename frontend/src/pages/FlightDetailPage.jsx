@@ -72,8 +72,8 @@ export default function FlightDetailPage() {
           <div className="flex items-center justify-between">
             <div className="text-center">
               <p className="text-3xl font-bold text-gray-900 dark:text-gray-100">{departure?.iata_code}</p>
-              <p className="text-lg text-gray-700">{departure?.city}</p>
-              <p className="text-sm text-gray-500">{departure?.name}</p>
+              <p className="text-lg text-gray-700 dark:text-gray-300">{departure?.city}</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">{departure?.name}</p>
               <p className="text-sm font-medium text-primary-600 mt-2">
                 {formatDateTime(flight.departure_at)}
               </p>
@@ -90,13 +90,13 @@ export default function FlightDetailPage() {
                 </svg>
                 <div className="h-px bg-gray-300 flex-1"></div>
               </div>
-              <p className="text-sm text-gray-500 mt-2">Vol direct</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">Vol direct</p>
             </div>
 
             <div className="text-center">
               <p className="text-3xl font-bold text-gray-900 dark:text-gray-100">{arrival?.iata_code}</p>
-              <p className="text-lg text-gray-700">{arrival?.city}</p>
-              <p className="text-sm text-gray-500">{arrival?.name}</p>
+              <p className="text-lg text-gray-700 dark:text-gray-300">{arrival?.city}</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">{arrival?.name}</p>
               <p className="text-sm font-medium text-primary-600 mt-2">
                 {formatDateTime(flight.arrival_at)}
               </p>
@@ -107,17 +107,17 @@ export default function FlightDetailPage() {
         {/* Infos & Prix */}
         <div className="p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
           <div className="space-y-2">
-            <p className="text-gray-600">
+            <p className="text-gray-600 dark:text-gray-400">
               <span className="font-medium">Places disponibles :</span>{' '}
               <span className={flight.available_seats < 10 ? 'text-red-600 font-bold' : 'text-green-600 font-bold'}>
                 {flight.available_seats}
               </span>{' '}
               / {flight.total_seats}
             </p>
-            <p className="text-gray-600">
+            <p className="text-gray-600 dark:text-gray-400">
               <span className="font-medium">Pays de départ :</span> {departure?.country}
             </p>
-            <p className="text-gray-600">
+            <p className="text-gray-600 dark:text-gray-400">
               <span className="font-medium">Pays d'arrivée :</span> {arrival?.country}
             </p>
           </div>

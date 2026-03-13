@@ -52,7 +52,7 @@ export default function ConfirmationPage() {
           </svg>
         </div>
         <h1 className="font-display text-3xl font-bold text-gray-900 dark:text-gray-100">Réservation confirmée !</h1>
-        <p className="text-gray-600 mt-2">Votre réservation a été enregistrée avec succès.</p>
+        <p className="text-gray-600 dark:text-gray-400 mt-2">Votre réservation a été enregistrée avec succès.</p>
       </div>
 
       <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden">
@@ -77,8 +77,8 @@ export default function ConfirmationPage() {
               <p className="font-semibold text-lg">
                 {departure?.city} ({departure?.iata_code}) → {arrival?.city} ({arrival?.iata_code})
               </p>
-              <p className="text-sm text-gray-600">{formatDateTime(flight?.departure_at)}</p>
-              <p className="text-sm text-gray-600">Durée : {formatDuration(flight?.departure_at, flight?.arrival_at)}</p>
+              <p className="text-sm text-gray-600 dark:text-gray-400">{formatDateTime(flight?.departure_at)}</p>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Durée : {formatDuration(flight?.departure_at, flight?.arrival_at)}</p>
             </div>
           </div>
 
@@ -89,7 +89,7 @@ export default function ConfirmationPage() {
               {booking.Passengers?.map((p, i) => (
                 <div key={i} className="bg-gray-50 dark:bg-gray-700 rounded-lg p-3 flex justify-between">
                   <span>{p.first_name} {p.last_name}</span>
-                  <span className="text-sm text-gray-500">{p.passport_number}</span>
+                  <span className="text-sm text-gray-500 dark:text-gray-400">{p.passport_number}</span>
                 </div>
               ))}
             </div>
@@ -127,12 +127,12 @@ export default function ConfirmationPage() {
                 : 'Veuillez patienter...'}
             </p>
             {emailSent && (
-              <div className="mt-3 bg-white rounded-lg p-3 border border-green-100 text-sm text-gray-700">
+              <div className="mt-3 bg-white rounded-lg p-3 border border-green-100 text-sm text-gray-700 dark:text-gray-300">
                 <p className="font-medium text-gray-900 dark:text-gray-100 mb-1">Objet : Confirmation de réservation #{booking?.id} — Météore</p>
                 <p>Bonjour {user?.first_name || 'cher client'},</p>
                 <p className="mt-1">Votre réservation pour le vol {flight?.flight_number} ({departure?.city} → {arrival?.city}) le {formatDateTime(flight?.departure_at)} a bien été confirmée.</p>
                 <p className="mt-1">Montant total : {formatPrice(booking?.total_price)}</p>
-                <p className="mt-2 text-gray-500 italic">— L'équipe Météore</p>
+                <p className="mt-2 text-gray-500 dark:text-gray-400 italic">— L'équipe Météore</p>
               </div>
             )}
           </div>
