@@ -146,7 +146,7 @@ export default function SearchPage() {
         <div className="bg-white rounded-xl shadow p-4 mb-6">
           <div className="flex flex-wrap items-end gap-4">
             <div>
-              <label className="block text-xs font-medium text-gray-500 mb-1">Prix max (EUR)</label>
+              <label className="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Prix max (EUR)</label>
               <input
                 type="number"
                 name="price_max"
@@ -154,16 +154,16 @@ export default function SearchPage() {
                 onChange={handleFilterChange}
                 placeholder="Illimité"
                 min="0"
-                className="border border-gray-300 rounded-lg px-3 py-2 w-32 text-sm text-gray-900 dark:text-gray-100"
+                className="border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 rounded-lg px-3 py-2 w-32 text-sm text-gray-900 dark:text-gray-100"
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-gray-500 mb-1">Compagnie</label>
+              <label className="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Compagnie</label>
               <select
                 name="airline_id"
                 value={filters.airline_id}
                 onChange={handleFilterChange}
-                className="border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 dark:text-gray-100"
+                className="border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 rounded-lg px-3 py-2 text-sm text-gray-900 dark:text-gray-100"
               >
                 <option value="">Toutes</option>
                 {airlines.map((a) => (
@@ -172,12 +172,12 @@ export default function SearchPage() {
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-gray-500 mb-1">Trier par</label>
+              <label className="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Trier par</label>
               <select
                 name="sort"
                 value={filters.sort}
                 onChange={handleFilterChange}
-                className="border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 dark:text-gray-100"
+                className="border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 rounded-lg px-3 py-2 text-sm text-gray-900 dark:text-gray-100"
               >
                 <option value="price">Prix croissant</option>
                 <option value="price_desc">Prix décroissant</option>

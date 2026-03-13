@@ -148,7 +148,7 @@ export default function ConfirmationPage() {
         </Link>
         <Link
           to="/"
-          className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2.5 px-6 rounded-lg transition-colors"
+          className="bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 font-semibold py-2.5 px-6 rounded-lg transition-colors"
         >
           Retour à l'accueil
         </Link>

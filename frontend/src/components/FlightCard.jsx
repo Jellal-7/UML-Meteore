@@ -34,7 +34,7 @@ export default function FlightCard({ flight }) {
           </div>
 
           <div className="flex-1 flex flex-col items-center px-2">
-            <p className="text-xs text-gray-500 mb-1">
+            <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">
               {formatDuration(flight.departure_at, flight.arrival_at)}
             </p>
             <div className="w-full flex items-center">
@@ -64,7 +64,7 @@ export default function FlightCard({ flight }) {
         {/* Prix & Action */}
         <div className="text-center md:text-right md:w-1/6">
           <p className="text-2xl font-bold text-primary-800">{formatPrice(flight.price)}</p>
-          <p className="text-xs text-gray-500 mb-2">par personne</p>
+          <p className="text-xs text-gray-500 dark:text-gray-400 mb-2">par personne</p>
           <Link
             to={`/flights/${flight.id}`}
             className="inline-block bg-accent-500 hover:bg-accent-600 text-white text-sm font-semibold py-2 px-5 rounded-lg transition-colors"

@@ -80,7 +80,7 @@ export default function FlightDetailPage() {
             </div>
 
             <div className="flex-1 mx-8 text-center">
-              <p className="text-sm text-gray-500 mb-2">
+              <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">
                 {formatDuration(flight.departure_at, flight.arrival_at)}
               </p>
               <div className="flex items-center">
@@ -124,7 +124,7 @@ export default function FlightDetailPage() {
 
           <div className="text-center md:text-right">
             <p className="text-4xl font-bold text-primary-800">{formatPrice(flight.price)}</p>
-            <p className="text-sm text-gray-500 mb-4">par personne</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">par personne</p>
             {flight.status === 'scheduled' && flight.available_seats > 0 ? (
               isAuthenticated ? (
                 <Link

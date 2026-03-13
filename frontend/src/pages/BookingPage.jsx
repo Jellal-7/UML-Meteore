@@ -93,7 +93,7 @@ export default function BookingPage() {
               <select
                 value={passengerCount}
                 onChange={handlePassengerCountChange}
-                className="border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                className="border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
               >
                 {Array.from({ length: Math.min(9, flight.available_seats) }, (_, i) => (
                   <option key={i + 1} value={i + 1}>{i + 1}</option>

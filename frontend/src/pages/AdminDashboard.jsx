@@ -172,7 +172,7 @@ export default function AdminDashboard() {
       <h1 className="font-display text-3xl font-bold text-gray-900 dark:text-gray-100 mb-6">Administration</h1>
 
       {/* Tabs */}
-      <div className="flex gap-1 mb-8 flex-wrap bg-gray-100 rounded-lg p-1">
+      <div className="flex gap-1 mb-8 flex-wrap bg-gray-100 dark:bg-gray-800 rounded-lg p-1">
         {tabs.map((t) => (
           <button
             key={t.id}
@@ -344,7 +344,7 @@ export default function AdminDashboard() {
                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                     bookingFilter === s
                       ? 'bg-primary-600 text-white'
-                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                      : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200'
                   }`}
                 >
                   {labels[s]} ({count})
@@ -355,22 +355,22 @@ export default function AdminDashboard() {
 
           <div className="flex flex-wrap gap-3 mb-4">
             <div>
-              <label className="block text-xs font-medium text-gray-500 mb-1">Utilisateur</label>
+              <label className="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Utilisateur</label>
               <input
                 type="text"
                 placeholder="Rechercher par nom..."
                 value={bookingUserSearch}
                 onChange={(e) => setBookingUserSearch(e.target.value)}
-                className="border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 w-48"
+                className="border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 rounded-lg px-3 py-2 text-sm text-gray-900 w-48"
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-gray-500 mb-1">Date</label>
+              <label className="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Date</label>
               <input
                 type="date"
                 value={bookingDateFilter}
                 onChange={(e) => setBookingDateFilter(e.target.value)}
-                className="border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 dark:text-gray-100"
+                className="border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 rounded-lg px-3 py-2 text-sm text-gray-900 dark:text-gray-100"
               />
             </div>
             {(bookingUserSearch || bookingDateFilter) && (
@@ -441,25 +441,25 @@ export default function AdminDashboard() {
             <div className="space-y-4">
               {modal.type === 'flight' && (
                 <>
-                  <input name="flight_number" placeholder="Numéro de vol" value={formData.flight_number || ''} onChange={handleFormChange} className="w-full border border-gray-300 rounded-lg px-3 py-2" />
-                  <select name="airline_id" value={formData.airline_id || ''} onChange={handleFormChange} className="w-full border border-gray-300 rounded-lg px-3 py-2">
+                  <input name="flight_number" placeholder="Numéro de vol" value={formData.flight_number || ''} onChange={handleFormChange} className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 rounded-lg px-3 py-2" />
+                  <select name="airline_id" value={formData.airline_id || ''} onChange={handleFormChange} className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 rounded-lg px-3 py-2">
                     <option value="">Compagnie</option>
                     {airlines.map((a) => <option key={a.id} value={a.id}>{a.name}</option>)}
                   </select>
-                  <select name="departure_airport_id" value={formData.departure_airport_id || ''} onChange={handleFormChange} className="w-full border border-gray-300 rounded-lg px-3 py-2">
+                  <select name="departure_airport_id" value={formData.departure_airport_id || ''} onChange={handleFormChange} className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 rounded-lg px-3 py-2">
                     <option value="">Aéroport de départ</option>
                     {airports.map((a) => <option key={a.id} value={a.id}>{a.city} ({a.iata_code})</option>)}
                   </select>
-                  <select name="arrival_airport_id" value={formData.arrival_airport_id || ''} onChange={handleFormChange} className="w-full border border-gray-300 rounded-lg px-3 py-2">
+                  <select name="arrival_airport_id" value={formData.arrival_airport_id || ''} onChange={handleFormChange} className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 rounded-lg px-3 py-2">
                     <option value="">Aéroport d'arrivée</option>
                     {airports.map((a) => <option key={a.id} value={a.id}>{a.city} ({a.iata_code})</option>)}
                   </select>
-                  <input type="datetime-local" name="departure_at" value={formData.departure_at ? new Date(formData.departure_at).toISOString().slice(0, 16) : ''} onChange={handleFormChange} className="w-full border border-gray-300 rounded-lg px-3 py-2" />
-                  <input type="datetime-local" name="arrival_at" value={formData.arrival_at ? new Date(formData.arrival_at).toISOString().slice(0, 16) : ''} onChange={handleFormChange} className="w-full border border-gray-300 rounded-lg px-3 py-2" />
-                  <input type="number" name="price" placeholder="Prix (EUR)" value={formData.price || ''} onChange={handleFormChange} step="0.01" className="w-full border border-gray-300 rounded-lg px-3 py-2" />
-                  <input type="number" name="available_seats" placeholder="Places disponibles" value={formData.available_seats || ''} onChange={handleFormChange} className="w-full border border-gray-300 rounded-lg px-3 py-2" />
-                  <input type="number" name="total_seats" placeholder="Total places" value={formData.total_seats || ''} onChange={handleFormChange} className="w-full border border-gray-300 rounded-lg px-3 py-2" />
-                  <select name="status" value={formData.status || 'scheduled'} onChange={handleFormChange} className="w-full border border-gray-300 rounded-lg px-3 py-2">
+                  <input type="datetime-local" name="departure_at" value={formData.departure_at ? new Date(formData.departure_at).toISOString().slice(0, 16) : ''} onChange={handleFormChange} className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 rounded-lg px-3 py-2" />
+                  <input type="datetime-local" name="arrival_at" value={formData.arrival_at ? new Date(formData.arrival_at).toISOString().slice(0, 16) : ''} onChange={handleFormChange} className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 rounded-lg px-3 py-2" />
+                  <input type="number" name="price" placeholder="Prix (EUR)" value={formData.price || ''} onChange={handleFormChange} step="0.01" className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 rounded-lg px-3 py-2" />
+                  <input type="number" name="available_seats" placeholder="Places disponibles" value={formData.available_seats || ''} onChange={handleFormChange} className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 rounded-lg px-3 py-2" />
+                  <input type="number" name="total_seats" placeholder="Total places" value={formData.total_seats || ''} onChange={handleFormChange} className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 rounded-lg px-3 py-2" />
+                  <select name="status" value={formData.status || 'scheduled'} onChange={handleFormChange} className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 rounded-lg px-3 py-2">
                     <option value="scheduled">Programmé</option>
                     <option value="cancelled">Annulé</option>
                   </select>
@@ -468,17 +468,17 @@ export default function AdminDashboard() {
 
               {modal.type === 'airport' && (
                 <>
-                  <input name="name" placeholder="Nom de l'aéroport" value={formData.name || ''} onChange={handleFormChange} className="w-full border border-gray-300 rounded-lg px-3 py-2" />
-                  <input name="iata_code" placeholder="Code IATA (3 lettres)" value={formData.iata_code || ''} onChange={handleFormChange} maxLength={3} className="w-full border border-gray-300 rounded-lg px-3 py-2 font-mono uppercase" />
-                  <input name="city" placeholder="Ville" value={formData.city || ''} onChange={handleFormChange} className="w-full border border-gray-300 rounded-lg px-3 py-2" />
-                  <input name="country" placeholder="Pays" value={formData.country || ''} onChange={handleFormChange} className="w-full border border-gray-300 rounded-lg px-3 py-2" />
+                  <input name="name" placeholder="Nom de l'aéroport" value={formData.name || ''} onChange={handleFormChange} className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 rounded-lg px-3 py-2" />
+                  <input name="iata_code" placeholder="Code IATA (3 lettres)" value={formData.iata_code || ''} onChange={handleFormChange} maxLength={3} className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 rounded-lg px-3 py-2 font-mono uppercase" />
+                  <input name="city" placeholder="Ville" value={formData.city || ''} onChange={handleFormChange} className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 rounded-lg px-3 py-2" />
+                  <input name="country" placeholder="Pays" value={formData.country || ''} onChange={handleFormChange} className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 rounded-lg px-3 py-2" />
                 </>
               )}
 
               {modal.type === 'airline' && (
                 <>
-                  <input name="name" placeholder="Nom de la compagnie" value={formData.name || ''} onChange={handleFormChange} className="w-full border border-gray-300 rounded-lg px-3 py-2" />
-                  <input name="logo_url" placeholder="URL du logo" value={formData.logo_url || ''} onChange={handleFormChange} className="w-full border border-gray-300 rounded-lg px-3 py-2" />
+                  <input name="name" placeholder="Nom de la compagnie" value={formData.name || ''} onChange={handleFormChange} className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 rounded-lg px-3 py-2" />
+                  <input name="logo_url" placeholder="URL du logo" value={formData.logo_url || ''} onChange={handleFormChange} className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 rounded-lg px-3 py-2" />
                 </>
               )}
             </div>
@@ -492,7 +492,7 @@ export default function AdminDashboard() {
               </button>
               <button
                 onClick={closeModal}
-                className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2.5 rounded-lg transition-colors"
+                className="flex-1 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 font-semibold py-2.5 rounded-lg transition-colors"
               >
                 Annuler
               </button>

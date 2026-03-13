@@ -47,7 +47,7 @@ export default function PaymentForm({ onPayment, loading }) {
           onChange={handleChange}
           required
           placeholder="Jean Dupont"
-          className="w-full border border-gray-300 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+          className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
         />
       </div>
 
@@ -60,7 +60,7 @@ export default function PaymentForm({ onPayment, loading }) {
           onChange={handleChange}
           required
           placeholder="1234 5678 9012 3456"
-          className="w-full border border-gray-300 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-primary-500 focus:border-transparent font-mono"
+          className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-primary-500 focus:border-transparent font-mono"
         />
       </div>
 
@@ -74,7 +74,7 @@ export default function PaymentForm({ onPayment, loading }) {
             onChange={handleChange}
             required
             placeholder="MM/AA"
-            className="w-full border border-gray-300 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-primary-500 focus:border-transparent font-mono"
+            className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-primary-500 focus:border-transparent font-mono"
           />
         </div>
         <div>
@@ -86,7 +86,7 @@ export default function PaymentForm({ onPayment, loading }) {
             onChange={handleChange}
             required
             placeholder="123"
-            className="w-full border border-gray-300 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-primary-500 focus:border-transparent font-mono"
+            className="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-primary-500 focus:border-transparent font-mono"
           />
         </div>
       </div>
