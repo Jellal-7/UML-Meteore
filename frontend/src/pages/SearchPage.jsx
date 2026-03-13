@@ -143,7 +143,7 @@ export default function SearchPage() {
 
       {/* Filtres */}
       {hasSearched && (
-        <div className="bg-white rounded-xl shadow p-4 mb-6">
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow p-4 mb-6">
           <div className="flex flex-wrap items-end gap-4">
             <div>
               <label className="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Prix max (EUR)</label>
