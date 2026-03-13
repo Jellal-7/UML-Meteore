@@ -40,7 +40,7 @@ export default function BookingCard({ booking, onCancel }) {
         </div>
 
         <div className="text-right space-y-2">
-          <p className="text-xl font-bold text-primary-800">{formatPrice(booking.total_price)}</p>
+          <p className="text-xl font-bold text-primary-800 dark:text-primary-300">{formatPrice(booking.total_price)}</p>
           <div className="flex gap-2 justify-end">
             <Link
               to={`/bookings/${booking.id}`}
